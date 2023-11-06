@@ -41,7 +41,8 @@ class Bus_TB(models.Model):
     end_time = models.CharField(max_length=100)
     fare = models.CharField(max_length=100)
     total_seats = models.CharField(max_length=100)
-    img = models.ImageField(upload_to='images/', null=True, blank=True)
+    available_seats = models.CharField(max_length=100)
+    img = models.ImageField(upload_to='images/', null=True)
     available_dates = models.CharField(max_length=100)
     login_id = models.ForeignKey(LogIN, on_delete=models.CASCADE)
     statuz = models.CharField(max_length=30)
@@ -49,3 +50,15 @@ class Bus_TB(models.Model):
     def __str__(self):
         return self.bus_name
     
+class Booked_seat(models.Model):
+    busid = models.ForeignKey(Bus_TB, on_delete=models.CASCADE)
+    login_id = models.ForeignKey(LogIN, on_delete=models.CASCADE)
+    no_of_seat = models.CharField(max_length=100)
+    seat_no = models.CharField(max_length=100)
+    total_fare = models.CharField(max_length=100)
+    today = models.DateField(max_length=100)
+
+    # def __str__(self):
+    #     return self.today
+
+

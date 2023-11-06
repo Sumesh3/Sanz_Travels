@@ -8,8 +8,7 @@ import Registration_bus from './pages/Company_Registration/Registration_bus';
 import AddBus from './pages/Company_Registration/Add_bus/AddBus';
 import ApproveBus from './pages/Admin/Approve_Bus/ApproveBus';
 import BusDetails from './pages/Admin/Bus_Details/BusDetails';
-
-import Search from './pages/Search/Search';
+import SeatChart from './pages/Seat_Chart/SeatChart';
 
 
 function App() {
@@ -24,7 +23,7 @@ function App() {
           <Route path='/addbus' element={<AddBus/>} />
           <Route path='/approvebus' element={<ApproveBus/>} />
           <Route path='/busdetails' element={<BusDetails/>} />
-          <Route path='/search' element={<Search/>} />
+          <Route exact path='/seatchart' element={<SeatChart/>} />
         </Routes>
       </BrowserRouter>
     </>

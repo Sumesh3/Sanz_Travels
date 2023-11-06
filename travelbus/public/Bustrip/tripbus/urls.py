@@ -19,6 +19,9 @@ urlpatterns = [
     path("add_bus_details_api", views.add_bus_details_api.as_view(), name="add_bus_details_api"),
     path("all_bus_details_api", views.all_bus_details_api.as_view(), name="all_bus_details_api"),
     path("update_bus_details_api/<int:id>", views.update_bus_details_api.as_view(), name="update_bus_details_api"),
+    path("single_bus_details_api/<int:id>", views.single_bus_details_api.as_view(), name="single_bus_details_api"),
     path("delete_bus_details/<int:id>", views.delete_bus_details.as_view(), name="delete_bus_details"),
     path("search_bus", views.search_bus.as_view(), name="search_bus"),
+    path("booked_seat_api", views.booked_seat_api.as_view(), name="booked_seat_api"),
+    path("view_seat_book_api/<int:id>", views.view_seat_book_api.as_view(), name="view_seat_book_api"),
 ]

@@ -1,13 +1,19 @@
 .offers {
     position: relative;
-    width: 100%; 
+    width: 100%;
     background: #f3f3f9;
     padding-top: 20px;
-	padding-bottom: 0;
+    padding-bottom: 0;
+    /* transition: cubic-bezier(0.23, 1, 0.320, 1); */
+    transition: all .2s ease-in;
 }
 
 .offers_col {
     margin-bottom: 20px;
+    /* transition: cubic-bezier(0.23, 1, 0.320, 1); */
+    transition: all .2s ease-in;
+
+
 }
 
 .offers_image_container {
@@ -81,4 +87,20 @@
     font-weight: 400;
     color: #929191;
     margin-left: 12px;
+}
+
+.btnbooknow {
+    background-color: greenyellow;
+    border: none;
+    padding: 5px 8px;
+    margin-left: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #030303;
+}
+
+.btnbooknow:hover {
+    background-color: rgb(134, 218, 7);
+    color: #030303;
+
 }

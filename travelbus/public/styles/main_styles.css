@@ -404,7 +404,7 @@ section {
 
 .logo a {
 	font-family: 'Open Sans', sans-serif;
-	font-size: 30px;
+	font-size: 25px;
 	color: #f4f4f8;
 	font-weight: 800;
 	text-transform: uppercase;
@@ -1780,8 +1780,8 @@ section {
 
 .footer_logo {
 	position: absolute;
-	left: 0;
-	top: -24px;
+	left: -22px;
+	top: -20px;
 }
 
 .footer_about_text {
@@ -2025,4 +2025,28 @@ section {
 
 .dropdown-nav:hover .dropdown-content-nav {
 	display: block;
+}
+
+.log_nav {
+	background-color: #0c1d74dc;
+	position: fixed;
+	width: 100%;
+	z-index: 1;
+	top: 0;
+	height: 110px;
+}
+
+.log_hed {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	z-index: 3;
+}
+
+.reg_foot {
+	background-color: #160a5e;
+	padding-top: 40px;
+	padding-bottom: 10px;
+	position: relative;
+	top: 150px;
 }

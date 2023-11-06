@@ -1,16 +1,19 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.db.models import Q
+from datetime import date 
 
 # Create your views here.
 
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from .models import LogIN, User_Registartion, Bus_company_Registartion, Bus_TB
-from .serializers import User_RegistartionSerializer, LoginSerializer, Bus_company_RegistartionSerializer, Bus_TBSerializer
+from .models import LogIN, User_Registartion, Bus_company_Registartion, Bus_TB, Booked_seat
+from .serializers import User_RegistartionSerializer, LoginSerializer, Bus_company_RegistartionSerializer, Bus_TBSerializer, Booked_seatSerializer
 
-#USER
+# USER
+
+
 class user_registration_api(GenericAPIView):
     serializer_class = User_RegistartionSerializer
     serializer_class_login = LoginSerializer
@@ -30,7 +33,7 @@ class user_registration_api(GenericAPIView):
         else:
             serializer_login = self.serializer_class_login(
                 data={'email': email, 'password': password, 'role': role})
-            
+
         if serializer_login.is_valid():
             log = serializer_login.save()
             login_id = log.id
@@ -43,12 +46,14 @@ class user_registration_api(GenericAPIView):
             return Response({'data': serializer.data, 'message': 'Registration Successfully', 'success': 1}, status=status.HTTP_200_OK)
         return Response({'data': serializer.errors, 'message': 'Registration failed', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)
 
+
 class single_user_api(GenericAPIView):
     def get(self, request, id):
         queryset = User_Registartion.objects.get(pk=id)
         serializer = User_RegistartionSerializer(queryset)
         return Response(serializer.data)
-    
+
+
 class all_view_user_api(GenericAPIView):
     serializer_class = User_RegistartionSerializer
 
@@ -59,7 +64,8 @@ class all_view_user_api(GenericAPIView):
             return Response({'data': serializer.data, 'message': 'data get', 'success': True}, status=status.HTTP_200_OK)
         else:
             return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
+
 class update_single_user_api(GenericAPIView):
     Serializer_class = User_RegistartionSerializer
 
@@ -79,8 +85,9 @@ class delete_user_api(GenericAPIView):
         deluser = User_Registartion.objects.get(pk=id)
         deluser.delete()
         return Response({'message': 'Deleted successfully'})
-    
-#BUS_OWNER
+
+# BUS_OWNER
+
 
 class Bus_company_Registartion_api(GenericAPIView):
     serializer_class = Bus_company_RegistartionSerializer
@@ -102,25 +109,27 @@ class Bus_company_Registartion_api(GenericAPIView):
         else:
             serializer_login = self.serializer_class_login(
                 data={'email': email, 'password': password, 'role': role})
-            
+
         if serializer_login.is_valid():
             log = serializer_login.save()
             login_id = log.id
             print(login_id)
 
             serializer = self.serializer_class(
-            data={'name': name, 'email': email, 'number': number, 'password': password, 'login_id': login_id, 'role': role, 'statuz':statuz})
+                data={'name': name, 'email': email, 'number': number, 'password': password, 'login_id': login_id, 'role': role, 'statuz': statuz})
         if serializer.is_valid():
             serializer.save()
             return Response({'data': serializer.data, 'message': 'Registration Successfully', 'success': 1}, status=status.HTTP_200_OK)
         return Response({'data': serializer.errors, 'message': 'Registration failed', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class single_company_api(GenericAPIView):
     def get(self, request, id):
         queryset = Bus_company_Registartion.objects.get(pk=id)
         serializer = Bus_company_RegistartionSerializer(queryset)
         return Response(serializer.data)
-    
+
+
 class all_company_api(GenericAPIView):
     serializer_class = Bus_company_RegistartionSerializer
 
@@ -131,7 +140,8 @@ class all_company_api(GenericAPIView):
             return Response({'data': serializer.data, 'message': 'data get', 'success': True}, status=status.HTTP_200_OK)
         else:
             return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
-   
+
+
 class update_single_company_api(GenericAPIView):
     Serializer_class = Bus_company_RegistartionSerializer
 
@@ -145,46 +155,53 @@ class update_single_company_api(GenericAPIView):
             serializer.save()
             return Response({'data': serializer.data, 'message': 'updated successfully', 'success': 1}, status=status.HTTP_200_OK)
 
+
 class delete_company_api(GenericAPIView):
     def delete(self, request, id):
         deluser = Bus_company_Registartion.objects.get(pk=id)
         deluser.delete()
         return Response({'message': 'Deleted successfully'})
 
-#LOGIN
+# LOGIN
+
 
 class login_api(GenericAPIView):
     serializer_class = LoginSerializer
-    def post(self,request):
+
+    def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
         logreg = LogIN.objects.filter(email=email, password=password)
-        if (logreg.count()>0):
+        if (logreg.count() > 0):
             read_serializer = LoginSerializer(logreg, many=True)
             for i in read_serializer.data:
-                login_id=i['id']
-                role=i['role']
-                
-                user_data=User_Registartion.objects.filter(login_id=login_id).values()
+                login_id = i['id']
+                role = i['role']
+
+                user_data = User_Registartion.objects.filter(
+                    login_id=login_id).values()
                 for i in user_data:
                     user_id = i['id']
                     name = i['name']
 
-                owner_data=Bus_company_Registartion.objects.filter(login_id=login_id).values()
+                owner_data = Bus_company_Registartion.objects.filter(
+                    login_id=login_id).values()
                 for i in owner_data:
                     user_id = i['id']
                     name = i['name']
 
-            return Response({'data':{'login_id':login_id,'user_id':user_id,'email':email,'password':password,'name':name,'role':role},'success':1, 'message':'Logged in successfully'}, status=status.HTTP_200_OK)
+            return Response({'data': {'login_id': login_id, 'user_id': user_id, 'email': email, 'password': password, 'name': name, 'role': role}, 'success': 1, 'message': 'Logged in successfully'}, status=status.HTTP_200_OK)
         else:
-            return Response({'data':'email id or password is invalid'}, status = status.HTTP_400_BAD_REQUEST)
+            return Response({'data': 'email id or password is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class delete_login_api(GenericAPIView):
     def delete(self, request, id):
         deluser = LogIN.objects.get(pk=id)
         deluser.delete()
         return Response({'message': 'Deleted successfully'})
-    
+
+
 class add_bus_details_api(GenericAPIView):
     Serializer_class = Bus_TBSerializer
 
@@ -198,16 +215,20 @@ class add_bus_details_api(GenericAPIView):
         start_time = request.data.get('start_time')
         end_time = request.data.get('end_time')
         fare = request.data.get('fare')
-        total_seats = request.data.get('total_seats')
+        total_seats = 40
+        available_seats = 40
         img = request.data.get('img')
         available_dates = request.data.get('available_dates')
         statuz = 1
         serializer = self.Serializer_class(
-            data={'login_id': login_id, 'company_name': company_name, 'bus_name': bus_name, 'bus_number': bus_number, 'bording_point': bording_point, 'droppinging_point': droppinging_point, 'start_time': start_time, 'end_time': end_time, 'fare': fare, 'total_seats':total_seats, 'available_dates':available_dates, 'img':img, 'statuz':statuz})
+            data={'login_id': login_id, 'company_name': company_name, 'bus_name': bus_name, 'bus_number': bus_number, 'bording_point': bording_point, 'droppinging_point': droppinging_point, 'start_time': start_time, 'end_time': end_time, 'fare': fare, 'total_seats': total_seats, 'available_dates': available_dates, 'img': img, 'statuz': statuz, 'available_seats': available_seats})
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
+            print("data saved")
             return Response({'data': serializer.data, 'message': 'Added successfully', 'success': 1}, status=status.HTTP_200_OK)
         return Response({'data': serializer.errors, 'message': 'failed', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class all_bus_details_api(GenericAPIView):
     serializer_class = Bus_TBSerializer
@@ -219,7 +240,15 @@ class all_bus_details_api(GenericAPIView):
             return Response({'data': serializer.data, 'message': 'data get', 'success': True}, status=status.HTTP_200_OK)
         else:
             return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
+
+class single_bus_details_api(GenericAPIView):
+    def get(self, request, id):
+        queryset = Bus_TB.objects.get(pk=id)
+        serializer = Bus_TBSerializer(queryset)
+        return Response(serializer.data)
+
+
 class update_bus_details_api(GenericAPIView):
     Serializer_class = Bus_TBSerializer
 
@@ -232,22 +261,23 @@ class update_bus_details_api(GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response({'data': serializer.data, 'message': 'updated successfully', 'success': 1}, status=status.HTTP_200_OK)
-        
+
 
 class delete_bus_details(GenericAPIView):
     def delete(self, request, id):
         deluser = Bus_TB.objects.get(pk=id)
         deluser.delete()
         return Response({'message': 'Deleted successfully'})
-    
+
 
 class search_bus(GenericAPIView):
     def post(self, request):
         starting = request.data.get('starting')
         ending = request.data.get('ending')
-        if (starting!="" and ending!=""):
+        if (starting != "" and ending != ""):
             queryset = Bus_TB.objects.filter(
-                Q(bording_point__icontains=starting) and Q(droppinging_point__icontains=ending)
+                Q(bording_point__icontains=starting) and Q(
+                    droppinging_point__icontains=ending)
             ).values()
             print(queryset)
 
@@ -276,3 +306,35 @@ class search_bus(GenericAPIView):
 #         data = [{'company_name':info.company_name} for info in i]
 #         return Response ({'data':data,'message':'Successfully fetched', 'success':True}, status=status.HTTP_200_OK)
 
+class booked_seat_api(GenericAPIView):
+    Serializer_class = Booked_seatSerializer
+
+    def post(self, request):
+        busid = request.data.get('busid')
+        login_id = request.data.get('login_id')
+        no_of_seat = request.data.get('no_of_seat')
+        seat_no = request.data.get('seat_no')
+        total_fare = request.data.get('total_fare')
+        # today = date.today()
+        today = request.data.get('today')
+        seat_no=str(seat_no)
+
+        serializer = self.Serializer_class(
+            data={'busid': busid, 'login_id': login_id, 'no_of_seat': no_of_seat, 'seat_no': seat_no, 'total_fare': total_fare, 'today':today})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'data': serializer.data, 'message': 'Successfull', 'success': 1}, status=status.HTTP_200_OK)
+        return Response({'data': serializer.errors, 'message': 'failed', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class view_seat_book_api(GenericAPIView):
+    serializer_class = Booked_seatSerializer
+
+    def get(self, request, id):
+        date = request.data.get('today')
+        bus = Booked_seat.objects.filter(busid=id, today=date)
+        if (bus.count() > 0):
+            serializer = Booked_seatSerializer(bus, many=True)
+            return Response({'data': serializer.data, 'message': 'data get', 'success': True}, status=status.HTTP_200_OK)
+        else:
+            return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)

@@ -14,8 +14,10 @@ export default function AddBus() {
   console.log(login_id);
 
   const [input, getInputs] = useState({
-    login_id: login_id
+    login_id: login_id,
   })
+
+  const [file, setFile] = useState()
 
   const navigate = useNavigate()
 
@@ -24,18 +26,51 @@ export default function AddBus() {
     const value = event.target.value
     getInputs({ ...input, [name]: value })
   }
+  // const handeleImage=(event)=>{
+  //   const name = event.target.name
+  //   setFile({ ...file, [name]:event.target.files[0] })
 
-  console.log(input);
+  // }
+
+  console.log(input.company_name);
 
   const submit = (event) => {
     event.preventDefault()
-    axios.post("http://127.0.0.1:8000/api/add_bus_details_api", input).then((response) => {
-      console.log(response.data.message)
-      navigate('/')
-      window.location.reload()
-    })
-    .catch((error) => {
-    })
+    const data = new FormData()
+    if (file){
+      data.append("login_id", login_id)
+      data.append("img", file)
+      data.append("company_name", input.company_name)
+      data.append("bus_name", input.bus_name)
+      data.append("bus_number", input.bus_number)
+      data.append("bording_point", input.bording_point)
+      data.append("droppinging_point", input.droppinging_point)
+      data.append("start_time", input.start_time)
+      data.append("end_time", input.end_time)
+      data.append("fare", input.fare)
+      data.append("total_seats", input.total_seats)
+      data.append("available_dates", input.available_dates)
+  
+      axios.post("http://127.0.0.1:8000/api/add_bus_details_api", data).then((response) => {
+        console.log(response.data.message)
+        navigate('/')
+        window.location.reload()
+      })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+    else{
+      axios.post("http://127.0.0.1:8000/api/add_bus_details_api", input).then((response) => {
+        console.log(response.data.message)
+        navigate('/')
+        window.location.reload()
+      })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+   
   }
 
   return (
@@ -96,13 +131,13 @@ export default function AddBus() {
                 <label htmlFor>Fare</label>
               </div>
               <div className="input-data">
-                <input type="text" required name='total_seats' onChange={addDetails} />
+                <input type="text" disabled />
                 <div className="underline" />
-                <label htmlFor>Total Seats</label>
+                <label htmlFor>Total Seats : 40</label>
               </div>
 
               <div className="input-data">
-                <input type="text" required name='available_dates' onChange={addDetails} />
+                <input type="text" required name='available_dates' onChange={addDetails}/>
                 <div className="underline" />
                 <label htmlFor>Available Dates</label>
               </div>
@@ -110,7 +145,7 @@ export default function AddBus() {
 
             <div className="upload_bus">
               <label htmlFor>Vehicle Image</label><br />
-              <input type="file" name='img' onChange={addDetails} />
+              <input type="file" name='img' onChange={(event) => { setFile(event.target.files[0]) }}/>
 
             </div>
 
