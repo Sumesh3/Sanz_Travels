@@ -3,7 +3,7 @@ import NavBar from '../../components/navBar/NavBar'
 import NavBar2 from '../../components/navBar/NavBar2'
 import FooterB from '../FooterB/FooterB'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import './Login.css'
 
@@ -54,7 +54,7 @@ export default function Login() {
                     <span className="forgot-password"><a href="#">Forgot Password ?</a></span>
                     <input className="login-button" type="submit" defaultValue="Sign In" onClick={submit} />
                     <center>
-                        <p className="signin">Don't have an acount ? <a className='sighinal' href="/registration">Sign up</a> </p>
+                        <p className="signin">Don't have an acount ? <Link className='sighinal' to={'/registration'}>Sign up</Link> </p>
                     </center>
                 </form>
                 <div className="social-account-container">

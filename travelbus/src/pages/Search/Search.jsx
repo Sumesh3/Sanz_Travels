@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Search() {
 
+    let data = localStorage.getItem("user_id")
+
     const [searchDatas, getsearchDatas] = useState({})
     const [searchDatasy, getsearchDatasy] = useState(
         true
@@ -32,10 +34,16 @@ export default function Search() {
 
     const book = (busid) => {
         sessionStorage.setItem('busid', busid)
-        navigate('/SeatChart')
+        data ?
+            navigate('/SeatChart')
+            :
+            navigate('/login')
         window.location.reload()
-
     }
+
+    const aaa = (e) => {
+        e.target.src = '/Bustrip/media/images/istockphoto-540124958-1024x1024.jpg'
+    };
 
     return (
         <>
@@ -91,7 +99,7 @@ export default function Search() {
                                                                 <div className="row">
                                                                     <div className="col-lg-6">
                                                                         <div className="offers_image_container">
-                                                                            <div className="offers_image_background" style={{ backgroundImage: `url(/Bustrip${data.img})` }} />
+                                                                            <div className="offers_image_background" style={{ backgroundImage: `url(/Bustrip${data.img})`}} onError={aaa}/>
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-lg-6">

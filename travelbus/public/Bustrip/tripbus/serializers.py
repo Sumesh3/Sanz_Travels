@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import LogIN, User_Registartion, Bus_company_Registartion, Bus_TB, Booked_seat
+from .models import LogIN, User_Registartion, Bus_company_Registartion, Bus_TB, Booked_seat, Passenger_Details
 
 class User_RegistartionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,3 +37,12 @@ class Booked_seatSerializer(serializers.ModelSerializer):
 
     def create(serlf, validated_data):
         return Booked_seat.objects.create(**validated_data)
+    
+
+class Passenger_DetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Passenger_Details
+        fields = '__all__'
+
+    def create(serlf, validated_data):
+        return Passenger_Details.objects.create(**validated_data)

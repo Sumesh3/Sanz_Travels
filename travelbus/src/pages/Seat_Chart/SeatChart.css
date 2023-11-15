@@ -69,20 +69,25 @@
     background: #e60404;
     text-indent: -9999px;
     overflow: hidden;
+    
 }
 
 .seat input[type=checkbox]:disabled+label:after {
     content: "X";
     text-indent: 0;
     position: absolute;
-    top: 4px;
+    top: 0px;
     left: 50%;
     transform: translate(-50%, 0%);
+    
 }
 
 .seat input[type=checkbox]:disabled+label:hover {
     box-shadow: none;
     cursor: not-allowed;
+    -webkit-animation-name: shake;
+    animation-name: shake;
+    animation-duration: 800ms;
 }
 
 .seat label {
@@ -98,8 +103,6 @@
     height: 40px;
 	/* background: linear-gradient(to right, #050806, #db0e15); */
     background: linear-gradient(0deg, rgb(170, 172, 241)  10%, rgb(11, 0, 0) 100%);
-
-
     border-radius: 5px;
     animation-duration: 300ms;
     animation-fill-mode: both;
@@ -220,9 +223,11 @@
 
 .continue_button{
     background-color: rgb(16, 188, 16);
+    color: #fff;
+    font-weight: 600;
     cursor: pointer;
     border: none;
-    width: 130px;
+    width: 140px;
     height: 32px;
     border-radius: 5px;
 }
@@ -239,4 +244,75 @@
 
 .seat_booking p input:focus{
     background-color: transparent;
+}
+
+
+
+
+.seath label {
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(0deg, rgb(170, 172, 241)  10%, rgb(11, 0, 0) 100%);
+    border-radius: 5px;
+}
+
+.seath {
+    display: flex;
+    flex: 0 0 14.28571428571429%;
+    padding: 5px;
+    position: relative;
+}
+
+.seath input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+}
+
+.seath label:before {
+    content: "";
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 3px;
+}
+
+.seath label:hover {
+    cursor: pointer;
+    padding: 6px;
+    -webkit-animation-name: shake;
+    animation-name: shake;
+    animation-duration: 500ms;
+    animation-fill-mode: both;
+}
+
+.seath:nth-child(2) {
+    margin-right: 25%;
+}
+
+.selectdatep{
+    position: absolute;
+    top: 34px;
+    left: 32%;
+    color: #e60404;
+    font-weight: 600;
+    -webkit-animation-name: shake;
+    animation-name: shake;
+    animation-duration: 500ms;
+    animation-fill-mode: both;
+
+}
+
+.hiddenb{
+    display: none;
 }

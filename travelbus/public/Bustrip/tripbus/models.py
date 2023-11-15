@@ -56,9 +56,19 @@ class Booked_seat(models.Model):
     no_of_seat = models.CharField(max_length=100)
     seat_no = models.CharField(max_length=100)
     total_fare = models.CharField(max_length=100)
-    today = models.DateField(max_length=100)
+    today = models.CharField(max_length=100)
 
     # def __str__(self):
     #     return self.today
 
 
+class Passenger_Details(models.Model):
+    login_id = models.ForeignKey(LogIN, on_delete=models.CASCADE)
+    Name = models.CharField(max_length=100)
+    Gender = models.CharField(max_length=100)
+    Age = models.CharField(max_length=100)
+    today = models.CharField(max_length=100)
+    statuz = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.Name

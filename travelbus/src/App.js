@@ -9,6 +9,11 @@ import AddBus from './pages/Company_Registration/Add_bus/AddBus';
 import ApproveBus from './pages/Admin/Approve_Bus/ApproveBus';
 import BusDetails from './pages/Admin/Bus_Details/BusDetails';
 import SeatChart from './pages/Seat_Chart/SeatChart';
+import CheckOut from './pages/Check_out/CheckOut';
+import Payment_type from './pages/Check_out/Payment_type';
+import Passenger_Details from './pages/Passenger_Details/Passenger_Details';
+import DebitCard from './pages/Debit_Card/DebitCard';
+import PaymentSuccessfull from './pages/Payment_Successful/PaymentSuccessfull';
 
 
 function App() {
@@ -24,6 +29,11 @@ function App() {
           <Route path='/approvebus' element={<ApproveBus/>} />
           <Route path='/busdetails' element={<BusDetails/>} />
           <Route exact path='/seatchart' element={<SeatChart/>} />
+          <Route path='/checkout' element={<CheckOut/>} />
+          <Route path='/payment_type' element={<Payment_type/>} />
+          <Route path='/passenger_details' element={<Passenger_Details/>} />
+          <Route path='/debitCard' element={<DebitCard/>} />
+          <Route path='/payment_successfull' element={<PaymentSuccessfull/>} />
         </Routes>
       </BrowserRouter>
     </>

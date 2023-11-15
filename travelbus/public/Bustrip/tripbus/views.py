@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.db.models import Q
-from datetime import date 
+from datetime import date
+from .qr import Generateqr
 
 # Create your views here.
 
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from .models import LogIN, User_Registartion, Bus_company_Registartion, Bus_TB, Booked_seat
-from .serializers import User_RegistartionSerializer, LoginSerializer, Bus_company_RegistartionSerializer, Bus_TBSerializer, Booked_seatSerializer
+from .models import LogIN, User_Registartion, Bus_company_Registartion, Bus_TB, Booked_seat, Passenger_Details
+from .serializers import User_RegistartionSerializer, LoginSerializer, Bus_company_RegistartionSerializer, Bus_TBSerializer, Booked_seatSerializer, Passenger_DetailsSerializer
 
 # USER
 
@@ -317,24 +318,78 @@ class booked_seat_api(GenericAPIView):
         total_fare = request.data.get('total_fare')
         # today = date.today()
         today = request.data.get('today')
-        seat_no=str(seat_no)
+        seat_no = str(seat_no)
 
         serializer = self.Serializer_class(
-            data={'busid': busid, 'login_id': login_id, 'no_of_seat': no_of_seat, 'seat_no': seat_no, 'total_fare': total_fare, 'today':today})
+            data={'busid': busid, 'login_id': login_id, 'no_of_seat': no_of_seat, 'seat_no': seat_no, 'total_fare': total_fare, 'today': today})
         if serializer.is_valid():
             serializer.save()
             return Response({'data': serializer.data, 'message': 'Successfull', 'success': 1}, status=status.HTTP_200_OK)
         return Response({'data': serializer.errors, 'message': 'failed', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class view_seat_book_api(GenericAPIView):
     serializer_class = Booked_seatSerializer
 
-    def get(self, request, id):
-        date = request.data.get('today')
+    def get(self, request, id, date):
         bus = Booked_seat.objects.filter(busid=id, today=date)
+        print(date)
         if (bus.count() > 0):
             serializer = Booked_seatSerializer(bus, many=True)
             return Response({'data': serializer.data, 'message': 'data get', 'success': True}, status=status.HTTP_200_OK)
         else:
             return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class generateqr_api(GenericAPIView):
+
+    def post(self, request):
+        grandtotal = request.data.get('grandTotal')
+        print(grandtotal)
+        Generateqr(grandtotal)
+        return Response({'message': 'QR Generated  successfully', 'success': 1}, status=status.HTTP_200_OK)
+
+
+class booked_passenger_details_api(GenericAPIView):
+    serializer_class = Passenger_DetailsSerializer
+
+    def post(self, request):
+        data_list = request.data
+
+        for data in data_list:
+            login_id = data.get('login_id')
+            name = data.get('Name')
+            gender = data.get('Gender')
+            age = data.get('Age')
+            today = data.get('today')
+            statuz = 1
+
+            serializer = self.serializer_class(
+                data={'login_id': login_id, 'Name': name, 'Gender': gender, 'Age': age, 'today':today, 'statuz':statuz})
+
+            if serializer.is_valid():
+                serializer.save()
+                print("Data saved")
+            else:
+                print(serializer.errors)
+
+        return Response({'message': 'Data added successfully', 'success': 1}, status=status.HTTP_200_OK)
+
+
+        # a = []
+
+        # a.append(
+        #     {
+        #        'login_id':login_id,
+        #        'Name':Name,
+        #        'Gender':Gender,
+        #        'Age':Age
+        #     }
+        # )
+
+        # serializer = self.Serializer_class(
+        #     data=a,many=True)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response({'data': serializer.data, 'message': 'Successfull', 'success': 1}, status=status.HTTP_200_OK)
+        # return Response({'data': serializer.errors, 'message': 'failed', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)

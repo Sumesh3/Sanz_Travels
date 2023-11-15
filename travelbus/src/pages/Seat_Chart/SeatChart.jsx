@@ -5,8 +5,7 @@ import NavBar from '../../components/navBar/NavBar'
 import NavBar2 from '../../components/navBar/NavBar2'
 import FooterB from '../FooterB/FooterB'
 import axios from 'axios'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export default function SeatChart() {
 
@@ -15,10 +14,6 @@ export default function SeatChart() {
     const [seat, setSeat] = useState(40)
 
     const [count, setcount] = useState([])
-
-    console.log(count);
-
-    console.log(count);
 
     const decrement = (event) => {
         if (event.target.checked) {
@@ -52,32 +47,49 @@ export default function SeatChart() {
                 console.log(error);
             })
     }, [])
-    console.log(busDetails);
 
     const total_fare = (count.length) * (busDetails.fare)
 
-    const [date, setDate] = useState({})
+    const [date, setDate] = useState(0)
 
     const tdate = (event) => {
         const name = event.target.name
         const value = event.target.value
         setDate({ ...date, [name]: value })
     }
-    console.log(date.today);
+
+    // const Proceed = (event) => {
+    // const data = {
+    //     busid: busid,
+    //     login_id: login_id,
+    //     no_of_seat: count.length,
+    //     seat_no: count,
+    //     total_fare: total_fare,
+    //     today: date.today
+    // }
+    // axios.post("http://127.0.0.1:8000/api/booked_seat_api", data).then((response) => {
+    //     sessionStorage.setItem("no_of_seat", data.no_of_seat)
+    //     navigate('/passenger_details')
+    //     window.location.reload()
+    // }).catch((error) => {
+    // })
+    // }
 
     const Proceed = (event) => {
-        // event.preventDefault()
-        const data = {
-            busid: busid,
-            login_id: login_id,
-            no_of_seat: count.length,
-            seat_no: count,
-            total_fare: total_fare,
-            today: date.today
+
+        const amound = {
+            grandTotal:total_fare
         }
-        console.log(data);
-        axios.post("http://127.0.0.1:8000/api/booked_seat_api", data).then((response) => {
-            navigate('/')
+
+        axios.post("http://127.0.0.1:8000/api/generateqr_api", amound).then((response) => {
+
+            sessionStorage.setItem("no_of_seat", count.length)
+            sessionStorage.setItem("seat_no", [count])
+            sessionStorage.setItem("total_fare", total_fare)
+            sessionStorage.setItem("today", date.today)
+
+            navigate('/passenger_details')
+            window.location.reload()
         }).catch((error) => {
         })
     }
@@ -86,18 +98,40 @@ export default function SeatChart() {
 
 
     useEffect(() => {
-        const data ={
-            today:String(date.today)
-        }
-        axios.get(`http://127.0.0.1:8000/api/view_seat_book_api/${busid}`,data).then((response) => {
+        axios.get(`http://127.0.0.1:8000/api/view_seat_book_api/${busid}/${date.today}`).then((response) => {
+            console.log(response);
             getBookedSeat(response.data.data)
         })
             .catch((error) => {
                 console.log(error);
             })
+    }, [date])
+
+    const [seatNo, getseatNo] = useState([])
+
+    const seatObject = {};
+
+    seatNo.forEach(item => {
+        seatObject[item] = true;
+    });
+
+    useEffect(() => {
+        let details_seat = []
+        bookedSeat.map((data, key) => (
+            JSON.parse(data.seat_no.replace(/'/g, "\""))
+                .map((number) => (
+                    details_seat.push((number))
+                ))
+        ))
+        getseatNo(details_seat)
     }, [bookedSeat])
 
-    console.log(bookedSeat);
+    console.log(date);
+    console.log(count);
+
+    const [selectDate, setSelectDate] = useState()
+    console.log(selectDate);
+
 
     return (
         <>
@@ -110,226 +144,444 @@ export default function SeatChart() {
                 <NavBar2></NavBar2>
             </div>
             <div className='row seat_outer'>
+
                 <div className="container plane col-lg-6">
                     <h1 className="seat_head">Select Your Seat</h1>
-                    <div className="fuselage">
-                    </div>
-                    <ol className="cabin fuselage">
-                        <li className="row row--1">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="1A" name='1A' onClick={decrement} />
-                                    <label htmlFor="1A">1A</label>
+                    {date == 0 ?
+                        <p className='selectdatep'>{selectDate}</p>
+                        :
+                        ''
+                    }
+                    {
+                        date == 0 ?
+                            <ol className="cabin fuselage">
+                                <li className="row row--1">
+                                    <ol className="seats">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A1</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" disabled />
+                                            <label>Occupied</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C1</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D1</label>
+                                        </li>
+                                    </ol>
                                 </li>
-                                <li className="seat">
-                                    <input type="checkbox" disabled id="1B" onClick={decrement} />
-                                    <label htmlFor="1B">Occupied</label>
+                                <li className="row row--2">
+                                    <ol className="seats">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A2</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B2</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C2</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D2</label>
+                                        </li>
+                                    </ol>
                                 </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="1C" name='1C' onClick={decrement} />
-                                    <label htmlFor="1C">1C</label>
+                                <li className="row row--3">
+                                    <ol className="seats" type="A">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A3</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="checkbox" id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B3</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C3</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D3</label>
+                                        </li>
+                                    </ol>
                                 </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="1D" name='1D' onClick={decrement} />
-                                    <label htmlFor="1D">1D</label>
+                                <li className="row row--4">
+                                    <ol className="seats" type="A">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A4</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B4</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C4</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D4</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--5">
+                                    <ol className="seats" type="A">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A5</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B5</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C5</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D5</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--6">
+                                    <ol className="seats" type="A">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A6</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B6</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C6</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D6</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--7">
+                                    <ol className="seats" type="A">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A7</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B7</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C7</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D7</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--8">
+                                    <ol className="seats" type="A">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A8</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B8</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C8</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D8</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--9">
+                                    <ol className="seats" type="A">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A9</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B9</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C9</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D9</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--10">
+                                    <ol className="seats" type="A">
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">A10</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">B10</label>
+                                        </li>
+                                        <li className="seath seatx">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">E10</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">C10</label>
+                                        </li>
+                                        <li className="seath">
+                                            <input type="button" className='hiddenb' id="11A" onClick={() => { setSelectDate('Choose Date First') }} />
+                                            <label htmlFor="11A">D10</label>
+                                        </li>
+                                    </ol>
                                 </li>
                             </ol>
-                        </li>
-                        <li className="row row--2">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="2A" name='2A' onClick={decrement} />
-                                    <label htmlFor="2A">2A</label>
+                            :
+
+
+
+                            <ol className="cabin fuselage">
+                                <li className="row row--1">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="1A" disabled={seatObject.A1 ? "true" : ''} name='A1' onClick={decrement} />
+                                            <label htmlFor="1A">A1</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" disabled id="1B" onClick={decrement} />
+                                            <label htmlFor="1B">Occupied</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="1C" name='C1' disabled={seatObject.C1 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="1C">C1</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="1D" name='D1' disabled={seatObject.D1 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="1D">D1</label>
+                                        </li>
+                                    </ol>
                                 </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="2B" name='2B' onClick={decrement} />
-                                    <label htmlFor="2B">2B</label>
+                                <li className="row row--2">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="2A" name='A2' disabled={seatObject.A2 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="2A">A2</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="2B" name='B2' disabled={seatObject.B2 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="2B">B2</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="2C" name='C2' disabled={seatObject.C2 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="2C">C2</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="2D" name='D2' disabled={seatObject.D2 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="2D">D2</label>
+                                        </li>
+                                    </ol>
                                 </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="2C" name='2C' onClick={decrement} />
-                                    <label htmlFor="2C">2C</label>
+                                <li className="row row--3">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="3A" name='A3' disabled={seatObject.A3 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="3A">A3</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="3B" name='B3' disabled={seatObject.B3 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="3B">B3</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="3C" name='C3' disabled={seatObject.C3 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="3C">C3</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="3D" name='D3' disabled={seatObject.D3 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="3D">D3</label>
+                                        </li>
+                                    </ol>
                                 </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="2D" name='2D' onClick={decrement} />
-                                    <label htmlFor="2D">2D</label>
+                                <li className="row row--4">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="4A" name='A4' disabled={seatObject.A4 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="4A">A4</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="4B" name='B4' disabled={seatObject.B4 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="4B">B4</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="4C" name='C4' disabled={seatObject.C4 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="4C">C4</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="4D" name='D4' disabled={seatObject.D4 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="4D">D4</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--5">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="5A" name='A5' disabled={seatObject.A5 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="5A">A5</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="5B" name='B5' disabled={seatObject.B5 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="5B">B5</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="5C" name='C5' disabled={seatObject.C5 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="5C">C5</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="5D" name='D5' disabled={seatObject.D5 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="5D">D5</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--6">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="6A" name='A6' disabled={seatObject.A6 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="6A">A6</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="6B" name='B6' disabled={seatObject.B6 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="6B">B6</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="6C" name='C6' disabled={seatObject.C6 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="6C">C6</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="6D" name='D6' disabled={seatObject.D6 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="6D">D6</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--7">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="7A" name='A7' disabled={seatObject.A7 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="7A">A7</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="7B" name='B7' disabled={seatObject.B7 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="7B">B7</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="7C" name='C7' disabled={seatObject.C7 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="7C">C7</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="7D" name='D7' disabled={seatObject.D7 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="7D">D7</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--8">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="8A" name='A8' disabled={seatObject.A8 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="8A">A8</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="8B" name='B8' disabled={seatObject.B8 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="8B">B8</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="8C" name='C8' disabled={seatObject.C8 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="8C">C8</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="8D" name='D8' disabled={seatObject.D8 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="8D">D8</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--9">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="9A" name='A9' disabled={seatObject.A9 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="9A">A9</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="9B" name='B9' disabled={seatObject.B9 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="9B">B9</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="9C" name='C9' disabled={seatObject.C9 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="9C">C9</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="9D" name='D9' disabled={seatObject.D9 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="9D">D9</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li className="row row--10">
+                                    <ol className="seats" type="A">
+                                        <li className="seat">
+                                            <input type="checkbox" id="10A" name='A10' disabled={seatObject.A10 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="10A">A10</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="10B" name='B10' disabled={seatObject.B10 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="10B">B10</label>
+                                        </li>
+                                        <li className="seat seatx">
+                                            <input type="checkbox" id="10C" name='E10' disabled={seatObject.E10 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="10C">E10</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="10D" name='C10' disabled={seatObject.C10 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="10D">C10</label>
+                                        </li>
+                                        <li className="seat">
+                                            <input type="checkbox" id="10E" name='D10' disabled={seatObject.D10 ? "true" : ''} onClick={decrement} />
+                                            <label htmlFor="10E">D10</label>
+                                        </li>
+                                    </ol>
                                 </li>
                             </ol>
-                        </li>
-                        <li className="row row--3">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="3A" name='3A' onClick={decrement} />
-                                    <label htmlFor="3A">3A</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="3B" name='3B' onClick={decrement} />
-                                    <label htmlFor="3B">3B</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="3C" name='3C' onClick={decrement} />
-                                    <label htmlFor="3C">3C</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="3D" name='3D' onClick={decrement} />
-                                    <label htmlFor="3D">3D</label>
-                                </li>
-                            </ol>
-                        </li>
-                        <li className="row row--4">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="4A" name='4A' onClick={decrement} />
-                                    <label htmlFor="4A">4A</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="4B" name='4B' onClick={decrement} />
-                                    <label htmlFor="4B">4B</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="4C" name='4C' onClick={decrement} />
-                                    <label htmlFor="4C">4C</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="4D" name='4D' onClick={decrement} />
-                                    <label htmlFor="4D">4D</label>
-                                </li>
-                            </ol>
-                        </li>
-                        <li className="row row--5">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="5A" name='5A' onClick={decrement} />
-                                    <label htmlFor="5A">5A</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="5B" name='5B' onClick={decrement} />
-                                    <label htmlFor="5B">5B</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="5C" name='5C' onClick={decrement} />
-                                    <label htmlFor="5C">5C</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="5D" name='5D' onClick={decrement} />
-                                    <label htmlFor="5D">5D</label>
-                                </li>
-                            </ol>
-                        </li>
-                        <li className="row row--6">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="6A" name='6A' onClick={decrement} />
-                                    <label htmlFor="6A">6A</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="6B" name='6B' onClick={decrement} />
-                                    <label htmlFor="6B">6B</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="6C" name='6C' onClick={decrement} />
-                                    <label htmlFor="6C">6C</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="6D" name='6D' onClick={decrement} />
-                                    <label htmlFor="6D">6D</label>
-                                </li>
-                            </ol>
-                        </li>
-                        <li className="row row--7">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="7A" name='7A' onClick={decrement} />
-                                    <label htmlFor="7A">7A</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="7B" name='7B' onClick={decrement} />
-                                    <label htmlFor="7B">7B</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="7C" name='7C' onClick={decrement} />
-                                    <label htmlFor="7C">7C</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="7D" name='7D' onClick={decrement} />
-                                    <label htmlFor="7D">7D</label>
-                                </li>
-                            </ol>
-                        </li>
-                        <li className="row row--8">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="8A" name='8A' onClick={decrement} />
-                                    <label htmlFor="8A">8A</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="8B" name='8B' onClick={decrement} />
-                                    <label htmlFor="8B">8B</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="8C" name='8C' onClick={decrement} />
-                                    <label htmlFor="8C">8C</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="8D" name='8D' onClick={decrement} />
-                                    <label htmlFor="8D">8D</label>
-                                </li>
-                            </ol>
-                        </li>
-                        <li className="row row--9">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="9A" name='9A' onClick={decrement} />
-                                    <label htmlFor="9A">9A</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="9B" name='9B' onClick={decrement} />
-                                    <label htmlFor="9B">9B</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="9C" name='9C' onClick={decrement} />
-                                    <label htmlFor="9C">9C</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="9D" name='9D' onClick={decrement} />
-                                    <label htmlFor="9D">9D</label>
-                                </li>
-                            </ol>
-                        </li>
-                        <li className="row row--10">
-                            <ol className="seats" type="A">
-                                <li className="seat">
-                                    <input type="checkbox" id="10A" name='10A' onClick={decrement} />
-                                    <label htmlFor="10A">10A</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="10B" name='10B' onClick={decrement} />
-                                    <label htmlFor="10B">10B</label>
-                                </li>
-                                <li className="seat seatx">
-                                    <input type="checkbox" id="10C" name='10C' onClick={decrement} />
-                                    <label htmlFor="10C">10C</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="10D" name='10D' onClick={decrement} />
-                                    <label htmlFor="10D">10D</label>
-                                </li>
-                                <li className="seat">
-                                    <input type="checkbox" id="10E" name='10E' onClick={decrement} />
-                                    <label htmlFor="10E">10E</label>
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
+                    }
                 </div>
                 <div className='seat_booking col-lg-6'>
-                    <h3>Booking Details</h3>
+                    <h3>Booking Details</h3><br />
                     <p>Date : <input type="date" name='today' onChange={tdate} /> </p>
                     <p>Total Seats : {busDetails.total_seats}</p>
                     <p>Available Seats : {seat}</p>
                     <p>No. of booked seates : {count.length}</p>
+                    <p>Seat nos. : {count}</p>
                     <p>One Seat Fare : {busDetails.fare}</p>
                     <p>Total Fare : {total_fare}</p>
-                    <button onClick={Proceed} className='continue_button'>Continue Booking</button>
+                    <button onClick={Proceed} className='continue_button'>PROCEED TO BOOK</button>
                 </div>
             </div>
 

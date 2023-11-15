@@ -23,5 +23,9 @@ urlpatterns = [
     path("delete_bus_details/<int:id>", views.delete_bus_details.as_view(), name="delete_bus_details"),
     path("search_bus", views.search_bus.as_view(), name="search_bus"),
     path("booked_seat_api", views.booked_seat_api.as_view(), name="booked_seat_api"),
-    path("view_seat_book_api/<int:id>", views.view_seat_book_api.as_view(), name="view_seat_book_api"),
+    path("view_seat_book_api/<int:id>/<str:date>", views.view_seat_book_api.as_view(), name="view_seat_book_api"),
+    path("generateqr_api", views.generateqr_api.as_view(), name="generateqr_api"),
+
+    path("booked_passenger_details_api", views.booked_passenger_details_api.as_view(), name="booked_passenger_details_api"),
+
 ]

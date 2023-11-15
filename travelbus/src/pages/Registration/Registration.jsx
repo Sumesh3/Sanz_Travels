@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Registration.css'
 import NavBar from '../../components/navBar/NavBar'
 import NavBar2 from '../../components/navBar/NavBar2'
 import FooterB from '../FooterB/FooterB'
 import axios from 'axios'
 import Header from '../../components/header/Header'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function Registration() {
 
@@ -21,16 +22,57 @@ export default function Registration() {
 
     console.log(input);
 
-    const submit = (event) => {
-        axios.post("http://127.0.0.1:8000/api/user_registration_api", input).then((response) => {
-            console.log(response.data.message)
-            navigate('/login')
-        }).catch((error) => {
-        })
+    const [error, setError] = useState({})
+    const [submits, setSubmit] = useState(false)
+
+    const validate = (value) => {
+        let error = {}
+
+        if (value.password != value.cpassword) {
+            // toast.error('Incorrect Password', {
+            //     position: "top-right",
+            //     autoClose: 5000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     theme: "light",
+            //     });
+
+            error.name = 'Incorrect Password'
+        }
+        return error
     }
+    console.log(error);
+
+
+    const submit = (event) => {
+        event.preventDefault()
+        setSubmit(!submits)
+
+
+    }
+
+    useEffect(() => {
+       if(submits){
+        setError(validate(input))
+
+        console.log(Object.keys(error).length, submits);
+        if (Object.keys(error).length === 0) {
+
+            // axios.post("http://127.0.0.1:8000/api/user_registration_api", input).then((response) => {
+            //     console.log(response.data.message)
+            navigate('/login')
+            // }).catch((error) => {
+            // })
+        }
+       }
+    },[submits])
 
     return (
         <>
+            <ToastContainer />
             <div className='reg_head'>
                 <Header></Header>
             </div>
@@ -42,21 +84,21 @@ export default function Registration() {
 
             <div className="container registration">
                 <div className="heading">Create Account</div>
-                <form action className="form regform">
+                <form className="form regform" onSubmit={(event) => event.preventDefault()}>
                     <input required className="input" type="text" name="name" placeholder="Name" onChange={addDetails} />
                     <input required className="input" type="email" name="email" placeholder="E-mail" onChange={addDetails} />
                     <input required className="input" type="text" name="number" placeholder="Phone number" onChange={addDetails} />
                     <input required className="input" type="password" name="password" placeholder="Password" onChange={addDetails} />
-                    <input required className="input" type="password" name="cpassword" placeholder="Confirm password" />
+                    <input required className="input" type="password" name="cpassword" placeholder="Confirm password" onChange={addDetails} />
                     <input className="login-button" type="submit" value={'Sign Up'} onClick={submit} />
                     <center>
-                        <p className="signin">Already have an acount ? <a className='sighinal' href="/login">Sign in</a> </p>
+                        <p className="signin">Already have an acount ? <Link className='sighinal' to={'/login'}>Sign in</Link></p>
                     </center>
                 </form>
-                
+
                 <div className="social-account-container">
                     <span className="title">Or Sign in with</span>
-                    
+
                     <div className="social-accounts">
                         <button className="social-button google">
                             <svg className="svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 488 512">
@@ -73,12 +115,12 @@ export default function Registration() {
                             </svg>
                         </button>
                     </div>
-                </div><br/>
+                </div><br />
                 <center>
-                    <p className="signin">Registration for Bus establishment. <a className='sighinal' href="/registrationbus">Register</a> </p>
+                    <p className="signin">Registration for Bus establishment.<Link className='sighinal' to={'/registrationbus'}>Register</Link> </p>
                 </center>
             </div>
-            
+
             <div className='reg_foot'>
                 <FooterB></FooterB>
             </div>
