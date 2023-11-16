@@ -41,9 +41,9 @@ export default function Search() {
         window.location.reload()
     }
 
-    const aaa = (e) => {
-        e.target.src = '/Bustrip/media/images/istockphoto-540124958-1024x1024.jpg'
-    };
+    // const aaa = (e) => {
+    //     e.target.src = '/Bustrip/media/images/istockphoto-540124958-1024x1024.jpg'
+    // };
 
     return (
         <>
@@ -99,7 +99,8 @@ export default function Search() {
                                                                 <div className="row">
                                                                     <div className="col-lg-6">
                                                                         <div className="offers_image_container">
-                                                                            <div className="offers_image_background" style={{ backgroundImage: `url(/Bustrip${data.img})`}} onError={aaa}/>
+                                                                            <img className="offers_image_background" src={`/Bustrip${data.img}`} alt="" onError={(e)=>{e.target.src = '/Bustrip/media/images/istockphoto-540124958-1024x1024.jpg'}}/>
+                                                                            {/* <div className="offers_image_background" style={{ backgroundImage: `url(/Bustrip${data.img})`}} onError={aaa}/> */}
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-lg-6">
