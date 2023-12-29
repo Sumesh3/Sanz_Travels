@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Payment_type() {
 
+
+
     const navigate = useNavigate()
 
     const busid = sessionStorage.getItem('busid')

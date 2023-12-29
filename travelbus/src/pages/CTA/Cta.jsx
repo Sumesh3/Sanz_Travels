@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Cta() {
     return (
@@ -21,7 +22,7 @@ export default function Cta() {
                                         <i />
                                     </div>
                                     <p className="cta_text">Bangalore is a metropolitan city and the capital of Karnataka state. It is the third most populous place. The town has a population of more than 8 million.</p>
-                                    <div className="button cta_button"><div className="button_bcg" /><a href="#">book now<span /><span /><span /></a></div>
+                                    <div className="button cta_button"><div className="button_bcg" /><Link to={''}>book now<span /><span /><span /></Link></div>
                                 </div>
                             </div>
                             {/* CTA Slider Nav - Prev */}

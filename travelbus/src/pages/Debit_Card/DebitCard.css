@@ -3,7 +3,7 @@
 .datpayment-form {
     position: relative;
     top: 140px;
-    width: 500px;
+    max-width: 550px;
     font-size: 15px;
     background: linear-gradient(0deg, rgb(170, 200, 241)  20%, rgb(250, 233, 235) 80%);
     color: #333333;

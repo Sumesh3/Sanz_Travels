@@ -1,8 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function HomeDup() {
 
     let data = localStorage.getItem("role")
+    let user = localStorage.getItem("email")
+
 
     return (
         <div className="home">
@@ -17,12 +20,23 @@ export default function HomeDup() {
                                 <>
                                     {
                                         data == "company" ?
-                                            <div className="button home_slider_button"><div className="button_bcg" /><a href="/addbus">add now<span /><span /><span /></a></div>
+                                            <div className="button home_slider_button"><div className="button_bcg" />
+                                                <Link to={'/addbus'}>add now<span /><span /><span /></Link>
+                                            </div>
                                             :
                                             data == 'admin' ?
-                                                <div className="button home_slider_button"><div className="button_bcg" /><a href="#">Confirm Request<span /><span /><span /></a></div>
+                                                <div className="button home_slider_button"><div className="button_bcg" />
+                                                    <Link to={'/approvebus'}>Confirm Request<span /><span /><span /></Link>
+                                                </div>
                                                 :
-                                                <div className="button home_slider_button"><div className="button_bcg" /><a href="#">explore now<span /><span /><span /></a></div>
+                                                <div className="button home_slider_button"><div className="button_bcg" />
+                                                    {
+                                                        user ?
+                                                            <Link to={'/'}>explore now</Link>
+                                                            :
+                                                            <Link to={'/login'}>explore now<span /><span /><span /></Link>
+                                                    }
+                                                </div>
                                     }
                                 </>
 
@@ -38,12 +52,23 @@ export default function HomeDup() {
                                 <>
                                     {
                                         data == "company" ?
-                                            <div className="button home_slider_button"><div className="button_bcg" /><a href="/addbus">add now<span /><span /><span /></a></div>
+                                            <div className="button home_slider_button"><div className="button_bcg" />
+                                                <Link to={"/addbus"}>add now<span /><span /><span /></Link>
+                                            </div>
                                             :
                                             data == 'admin' ?
-                                                <div className="button home_slider_button"><div className="button_bcg" /><a href="#">Confirm Request<span /><span /><span /></a></div>
+                                                <div className="button home_slider_button"><div className="button_bcg" />
+                                                    <Link to={'/approvebus'}>Confirm Request<span /><span /><span /></Link>
+                                                </div>
                                                 :
-                                                <div className="button home_slider_button"><div className="button_bcg" /><a href="#">explore now<span /><span /><span /></a></div>
+                                                <div className="button home_slider_button"><div className="button_bcg" />
+                                                    {
+                                                        user ?
+                                                            <Link to={'/'}>explore now<span /><span /><span /></Link>
+                                                            :
+                                                            <Link to={'/login'}>explore now<span /><span /><span /></Link>
+                                                    }
+                                                </div>
                                     }
                                 </>
                             </div>
@@ -58,12 +83,23 @@ export default function HomeDup() {
                                 <>
                                     {
                                         data == "company" ?
-                                            <div className="button home_slider_button"><div className="button_bcg" /><a href="/addbus">add now<span /><span /><span /></a></div>
+                                            <div className="button home_slider_button"><div className="button_bcg" />
+                                                <Link to={"/addbus"}>add now<span /><span /><span /></Link>
+                                            </div>
                                             :
                                             data == 'admin' ?
-                                                <div className="button home_slider_button"><div className="button_bcg" /><a href="#">Confirm Request<span /><span /><span /></a></div>
+                                                <div className="button home_slider_button"><div className="button_bcg" />
+                                                    <Link to={'/approvebus'}>Confirm Request<span /><span /><span /></Link>
+                                                </div>
                                                 :
-                                                <div className="button home_slider_button"><div className="button_bcg" /><a href="#">explore now<span /><span /><span /></a></div>
+                                                <div className="button home_slider_button"><div className="button_bcg" />
+                                                    {
+                                                        user ?
+                                                            <Link to={'/'}>explore now<span /><span /><span /></Link>
+                                                            :
+                                                            <Link to={'/login'}>explore now<span /><span /><span /></Link>
+                                                    }
+                                                </div>
                                     }
                                 </>
                             </div>

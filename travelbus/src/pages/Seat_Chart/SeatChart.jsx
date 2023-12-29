@@ -6,6 +6,7 @@ import NavBar2 from '../../components/navBar/NavBar2'
 import FooterB from '../FooterB/FooterB'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Payment_type from '../../pages/Check_out/Payment_type'
 
 export default function SeatChart() {
 
@@ -78,7 +79,7 @@ export default function SeatChart() {
     const Proceed = (event) => {
 
         const amound = {
-            grandTotal:total_fare
+            grandTotal: total_fare
         }
 
         axios.post("http://127.0.0.1:8000/api/generateqr_api", amound).then((response) => {
@@ -131,6 +132,8 @@ export default function SeatChart() {
 
     const [selectDate, setSelectDate] = useState()
     console.log(selectDate);
+
+    console.log(count.length);
 
 
     return (
@@ -588,6 +591,9 @@ export default function SeatChart() {
             <div className='reg_foot'>
                 <FooterB></FooterB>
             </div>
+
+            
+
         </>
     )
 }

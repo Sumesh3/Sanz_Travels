@@ -14,6 +14,18 @@ import Payment_type from './pages/Check_out/Payment_type';
 import Passenger_Details from './pages/Passenger_Details/Passenger_Details';
 import DebitCard from './pages/Debit_Card/DebitCard';
 import PaymentSuccessfull from './pages/Payment_Successful/PaymentSuccessfull';
+import About from './pages/About/About';
+import Blog from './pages/Blog/Blog';
+import ViewProfile from './pages/View_Profile/ViewProfile';
+import EditProfile from './pages/View_Profile/EditProfile';
+import UserDetails from './pages/Admin/User_Details/UserDetails';
+import EstablishmentDetails from './pages/Admin/Establishment_Details/EstablishmentDetails';
+import RejectedBusses from './pages/Admin/Rejected_Busses/RejectedBusses';
+import AdminProfile from './pages/Admin/Admin_Profile/AdminProfile';
+import CompanyProfile from './pages/Company_Profile/CompanyProfile';
+import ApproveCompany from './pages/Company_Registration/Approve_Company_Bus/ApproveCompany';
+import RejectedCompany from './pages/Company_Registration/Rejected_Company_Bus/RejectedCompany';
+import EditComBus from './pages/Company_Registration/Approve_Company_Bus/EditComBus';
 
 
 function App() {
@@ -34,6 +46,18 @@ function App() {
           <Route path='/passenger_details' element={<Passenger_Details/>} />
           <Route path='/debitCard' element={<DebitCard/>} />
           <Route path='/payment_successfull' element={<PaymentSuccessfull/>} />
+          <Route path='/about' element={<About/>} />
+          <Route path='/blog' element={<Blog/>} />
+          <Route path='/viewprofile' element={<ViewProfile/>} />
+          <Route path='/editprofile' element={<EditProfile/>} />
+          <Route path='/userdetails' element={<UserDetails/>} />
+          <Route path='/companydetails' element={<EstablishmentDetails/>} />
+          <Route path='/rejectedbusses' element={<RejectedBusses/>} />
+          <Route path='/adminprofile' element={<AdminProfile/>} />
+          <Route path='/companyprofile' element={<CompanyProfile/>} />
+          <Route path='/approvecompanybus' element={<ApproveCompany/>} />
+          <Route path='/rejectedcompanybus' element={<RejectedCompany/>} />
+          <Route path='/editcombus/:id' element={<EditComBus/>} />
         </Routes>
       </BrowserRouter>
     </>

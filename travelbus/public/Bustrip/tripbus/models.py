@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class LogIN(models.Model):
     email = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=20)
@@ -9,7 +10,8 @@ class LogIN(models.Model):
 
     def __str__(self):
         return self.email
-    
+
+
 class User_Registartion(models.Model):
     name = models.CharField(max_length=40)
     email = models.CharField(max_length=50, unique=True)
@@ -19,6 +21,7 @@ class User_Registartion(models.Model):
 
     def __str__(self):
         return self.email
+
 
 class Bus_company_Registartion(models.Model):
     name = models.CharField(max_length=40)
@@ -31,6 +34,18 @@ class Bus_company_Registartion(models.Model):
     def __str__(self):
         return self.name
     
+
+class Admin_Registartion(models.Model):
+    name = models.CharField(max_length=40)
+    email = models.CharField(max_length=50, unique=True)
+    number = models.CharField(max_length=10)
+    login_id = models.ForeignKey(LogIN, on_delete=models.CASCADE)
+    role = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.name
+
+
 class Bus_TB(models.Model):
     company_name = models.CharField(max_length=40)
     bus_name = models.CharField(max_length=100)
@@ -43,13 +58,14 @@ class Bus_TB(models.Model):
     total_seats = models.CharField(max_length=100)
     available_seats = models.CharField(max_length=100)
     img = models.ImageField(upload_to='images/', null=True)
-    available_dates = models.CharField(max_length=100)
+    # available_dates = models.CharField(max_length=100)
     login_id = models.ForeignKey(LogIN, on_delete=models.CASCADE)
     statuz = models.CharField(max_length=30)
 
     def __str__(self):
         return self.bus_name
-    
+
+
 class Booked_seat(models.Model):
     busid = models.ForeignKey(Bus_TB, on_delete=models.CASCADE)
     login_id = models.ForeignKey(LogIN, on_delete=models.CASCADE)
@@ -69,6 +85,16 @@ class Passenger_Details(models.Model):
     Age = models.CharField(max_length=100)
     today = models.CharField(max_length=100)
     statuz = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.Name
+
+
+class Enquiry_Message(models.Model):
+    Name = models.CharField(max_length=100)
+    Email = models.CharField(max_length=100)
+    Subject = models.CharField(max_length=500)
+    Message = models.CharField(max_length=1000)
 
     def __str__(self):
         return self.Name

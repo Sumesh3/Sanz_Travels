@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './AddBus.css'
 
 import NavBar from '../../../components/navBar/NavBar'
@@ -11,11 +11,15 @@ import axios from 'axios'
 export default function AddBus() {
 
   const login_id = localStorage.getItem("login_id")
+  const company_name = localStorage.getItem("name")
   console.log(login_id);
 
   const [input, getInputs] = useState({
     login_id: login_id,
+    company_name:company_name
   })
+
+  console.log(input);
 
   const [file, setFile] = useState()
 
@@ -32,15 +36,13 @@ export default function AddBus() {
 
   // }
 
-  console.log(input.company_name);
-
   const submit = (event) => {
     event.preventDefault()
     const data = new FormData()
-    if (file){
+    if (file) {
       data.append("login_id", login_id)
       data.append("img", file)
-      data.append("company_name", input.company_name)
+      data.append("company_name", company_name)
       data.append("bus_name", input.bus_name)
       data.append("bus_number", input.bus_number)
       data.append("bording_point", input.bording_point)
@@ -49,8 +51,8 @@ export default function AddBus() {
       data.append("end_time", input.end_time)
       data.append("fare", input.fare)
       data.append("total_seats", input.total_seats)
-      data.append("available_dates", input.available_dates)
-  
+      // data.append("available_dates", input.available_dates)
+
       axios.post("http://127.0.0.1:8000/api/add_bus_details_api", data).then((response) => {
         console.log(response.data.message)
         navigate('/')
@@ -60,7 +62,7 @@ export default function AddBus() {
           console.log(error);
         })
     }
-    else{
+    else {
       axios.post("http://127.0.0.1:8000/api/add_bus_details_api", input).then((response) => {
         console.log(response.data.message)
         navigate('/')
@@ -70,7 +72,7 @@ export default function AddBus() {
           console.log(error);
         })
     }
-   
+
   }
 
   return (
@@ -91,7 +93,7 @@ export default function AddBus() {
           <form className='bus_forms'>
             <div className="form-row row">
               <div className="input-data">
-                <input type="text" required name='company_name' onChange={addDetails} />
+                <input type="text" required name='company_name'  value={company_name}/>
                 <div className="underline" />
                 <label htmlFor>Company Name</label>
               </div>
@@ -106,12 +108,28 @@ export default function AddBus() {
                 <label htmlFor>Bus Number</label>
               </div>
               <div className="input-data">
-                <input type="text" required name='bording_point' onChange={addDetails} />
+                <input className="search_inputd" type="text" required list="From" name='bording_point' onChange={addDetails} />
+                <datalist id="From">
+                  <option>Kozhikode</option>
+                  <option>Ernakulam</option>
+                  <option>Trivandrum</option>
+                  <option>Chennai</option>
+                  <option>Bangalore</option>
+                  <option>Coimbatore</option>
+                </datalist>
                 <div className="underline" />
                 <label htmlFor>Bording Point</label>
               </div>
               <div className="input-data">
-                <input type="text" required name='droppinging_point' onChange={addDetails} />
+                <input className="search_inputd" type="text" required list="destination" name='droppinging_point' onChange={addDetails} />
+                <datalist id="destination">
+                  <option>Kozhikode</option>
+                  <option>Ernakulam</option>
+                  <option>Trivandrum</option>
+                  <option>Chennai</option>
+                  <option>Bangalore</option>
+                  <option>Coimbatore</option>
+                </datalist>
                 <div className="underline" />
                 <label htmlFor>Dropping Point</label>
               </div>
@@ -136,16 +154,16 @@ export default function AddBus() {
                 <label htmlFor>Total Seats : 40</label>
               </div>
 
-              <div className="input-data">
+              {/* <div className="input-data">
                 <input type="text" required name='available_dates' onChange={addDetails}/>
                 <div className="underline" />
                 <label htmlFor>Available Dates</label>
-              </div>
+              </div> */}
             </div>
 
             <div className="upload_bus">
               <label htmlFor>Vehicle Image</label><br />
-              <input type="file" name='img' onChange={(event) => { setFile(event.target.files[0]) }}/>
+              <input type="file" name='img' onChange={(event) => { setFile(event.target.files[0]) }} />
 
             </div>
 

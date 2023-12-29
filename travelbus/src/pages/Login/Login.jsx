@@ -29,6 +29,7 @@ export default function Login() {
             localStorage.setItem("role", response.data.data.role)
             localStorage.setItem("user_id", response.data.data.user_id)
             localStorage.setItem("login_id", response.data.data.login_id)
+            localStorage.setItem("name", response.data.data.name)
             navigate('/')
             window.location.reload()
         }).catch((error) => {

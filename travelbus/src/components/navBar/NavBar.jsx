@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function NavBar() {
 
@@ -10,48 +11,94 @@ export default function NavBar() {
                 <div className="row">
                     <div className="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                         <div className="logo_container">
-                            <div className="logo"><a href="/"><img src="Assets/images/logo.png" height={'40px'} />Sanz travel</a></div>
+                            <div className="logo"><Link to={'/'}><img src="Assets/images/logo.png" height={'40px'} />Sanz travel</Link></div>
                         </div>
                         <div className="main_nav_container ml-auto">
                             <ul className="main_nav_list">
-                                <li className="main_nav_item"><a href="/">home</a></li>
+                                <li className="main_nav_item"><Link to={'/'}>home</Link></li>
                                 <>
                                     {
                                         data == 'admin' ?
                                             <li className="main_nav_item dropdown-nav"><a className='dropbtn'>Details</a>
                                                 <div class="dropdown-content-nav dropdown-content">
-                                                    <a href='#'>User Details</a>
-                                                    <a href='#'>Establishment Details</a>
+                                                    <Link to={'/userdetails'}>User Details</Link>
+                                                    <Link to={'/companydetails'}>Establishment Details</Link>
                                                 </div>
                                             </li>
                                             :
-                                            <li className="main_nav_item"><a href="about.html">about us</a></li>
+                                            <li className="main_nav_item"><Link to={'/about'}>about us</Link></li>
                                     }
                                 </>
                                 <>
                                     {
                                         data == 'admin' ?
-                                            <li className="main_nav_item"><a href="#">Bus Details</a></li>
+
+                                            <li className="main_nav_item dropdown-nav"><a className='dropbtn'>Bus Details</a>
+                                                <div class="dropdown-content-nav dropdown-content">
+                                                    <Link to={'/busdetails'}>Approved Busses</Link>
+                                                    <Link to={'/rejectedbusses'}>Rejected Busses</Link>
+                                                </div>
+                                            </li>
+                                            // <li className="main_nav_item">
+                                            //     <Link to={'/busdetails'}>Bus Details</Link>
+                                            //     </li>
                                             :
-                                            <li className="main_nav_item"><a href="blog.html">Blog</a></li>
+                                            data == 'company' ?
+                                                <li className="main_nav_item dropdown-nav"><a className='dropbtn'>Bus Details</a>
+                                                    <div class="dropdown-content-nav dropdown-content">
+                                                        <Link to={'/approvecompanybus'}>Approved / Pending</Link>
+                                                        <Link to={'/rejectedcompanybus'}>Rejected</Link>
+                                                    </div>
+                                                </li>
+                                                :
+                                                <li className="main_nav_item"><Link to={'/blog'}>Blog</Link></li>
                                     }
                                 </>
                                 <>
                                     {
                                         data == 'company' ?
-                                            <li className="main_nav_item"><a href="/addbus">Add your bus</a></li>
+                                            <li className="main_nav_item">
+                                                <Link to={'/addbus'}>Add your bus</Link>
+                                            </li>
                                             : data == 'admin' ?
-                                                <li className="main_nav_item"><a href="/approvebus">Confirm Request</a></li>
+                                                <li className="main_nav_item">
+                                                    <Link to={'/approvebus'}>Confirm Request</Link>
+                                                </li>
                                                 : data == 'user' ?
-                                                    <li className="main_nav_item"><a href="#">view ticket</a></li>
+                                                    <li className="main_nav_item">
+                                                        <Link to={'/'}>view ticket</Link>
+                                                    </li>
                                                     : ""
                                     }
                                 </>
                                 <>
                                     {
+                                        data == 'company' ?
+                                            <li className="main_nav_item">
+                                                <Link to={'/'}>Booked Details</Link>
+                                            </li>
+                                            : data == 'admin' ?
+                                                <li className="main_nav_item">
+                                                    <Link to={'/'}>Booked Details</Link>
+                                                </li>
+                                                : ""
+                                    }
+                                </>
+                                <>
+                                    {
                                         data == null ?
-                                            ''
-                                            : <li className="main_nav_item"><a href="#">my account </a></li>
+                                            ""
+                                            :
+                                            data == 'user' ?
+                                                <li className="main_nav_item"><Link to={'/viewprofile'}>My account</Link></li>
+                                                :
+                                                data == 'admin' ?
+                                                    <li className="main_nav_item"><Link to={'/adminprofile'}>My account</Link></li>
+                                                    :
+                                                    data == 'company' ?
+                                                        <li className="main_nav_item"><Link to={'/companyprofile'}>My account</Link></li>
+                                                        :
+                                                        ''
                                     }
                                 </>
 

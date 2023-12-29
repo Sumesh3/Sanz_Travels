@@ -41,6 +41,15 @@ export default function Search() {
         window.location.reload()
     }
 
+    const [searchResultFilter, getSearchResultFilter] = useState([])
+
+    useEffect(() => {
+        const data = searchResult.filter((data, key) => {
+            return data.statuz === '2'
+        })
+        getSearchResultFilter(data)
+    }, [searchResult])
+
     // const aaa = (e) => {
     //     e.target.src = '/Bustrip/media/images/istockphoto-540124958-1024x1024.jpg'
     // };
@@ -57,20 +66,31 @@ export default function Search() {
                                 <form className="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                     <div className="search_item">
                                         <div>From</div>
-                                        <input type="text" className="destination search_input" required="required" name='starting' onChange={searchdta} />
+                                        <input className="destination search_input" list="From" placeholder="Select the recommended option..." name='starting' onChange={searchdta}/>
+                                        <datalist id="From">
+                                            <option>Kozhikode</option>
+                                            <option>Ernakulam</option>
+                                            <option>Trivandrum</option>
+                                            <option>Chennai</option>
+                                            <option>Bangalore</option>
+                                            <option>Coimbatore</option>
+                                        </datalist>
+                                        {/* <input type="text" className="destination search_input" required="required" name='starting' onChange={searchdta} /> */}
                                     </div>
                                     <div className="search_item">
                                         <div>destination</div>
-                                        <input type="text" className="destination search_input" required="required" name='ending' onChange={searchdta} />
+                                        <input className="destination search_input" list="destination" placeholder="Select the recommended option..." name='ending' onChange={searchdta}/>
+                                        <datalist id="destination">
+                                        <option>Kozhikode</option>
+                                            <option>Ernakulam</option>
+                                            <option>Trivandrum</option>
+                                            <option>Chennai</option>
+                                            <option>Bangalore</option>
+                                            <option>Coimbatore</option>
+                                        </datalist>
+                                        {/* <input type="text" className="destination search_input" required="required" name='ending' onChange={searchdta} /> */}
                                     </div>
-                                    {/* <div className="search_item">
-                                    <div>date of travel</div>
-                                    <input type="text" className="check_in search_input" placeholder="YYYY-MM-DD" />
-                                </div> */}
-                                    {/* <div className="search_item">
-                                    <div>check out</div>
-                                    <input type="text" className="check_out search_input" placeholder="YYYY-MM-DD" />
-                                </div> */}
+
                                     <button className="button search_button" onClick={SearchBtn}>search<span /><span /><span /></button>
                                 </form>
                             </div>
@@ -90,16 +110,16 @@ export default function Search() {
                                         {/* Offers Item */}
                                         {
                                             searchResult[0] == null ?
-                                                <div>No buses available</div>
+                                                <div className='not_available'>Not   available</div>
                                                 :
-                                                searchResult.map((data, key) => (
+                                                searchResultFilter.map((data, key) => (
                                                     <>
                                                         <div className="col-lg-4 offers_col">
                                                             <div className="offers_item">
                                                                 <div className="row">
                                                                     <div className="col-lg-6">
                                                                         <div className="offers_image_container">
-                                                                            <img className="offers_image_background" src={`/Bustrip${data.img}`} alt="" onError={(e)=>{e.target.src = '/Bustrip/media/images/istockphoto-540124958-1024x1024.jpg'}}/>
+                                                                            <img className="offers_image_background" src={`/Bustrip${data.img}`} alt="" onError={(e) => { e.target.src = '/Bustrip/media/images/istockphoto-540124958-1024x1024.jpg' }} />
                                                                             {/* <div className="offers_image_background" style={{ backgroundImage: `url(/Bustrip${data.img})`}} onError={aaa}/> */}
                                                                         </div>
                                                                     </div>

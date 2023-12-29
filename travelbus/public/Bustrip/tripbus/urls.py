@@ -14,6 +14,10 @@ urlpatterns = [
     path("update_single_company_api/<int:id>", views.update_single_company_api.as_view(), name="update_single_company_api"),
     path("delete_company_api/<int:id>", views.delete_company_api.as_view(), name="delete_company_api"),
 
+    path("Admin_Registartion_api", views.Admin_Registartion_api.as_view(), name="Admin_Registartion_api"),
+    path("single_admin_api/<int:id>", views.single_admin_api.as_view(), name="single_admin_api"),
+    path("update_admin_api/<int:id>", views.update_admin_api.as_view(), name="update_admin_api"),
+
     path("login_api", views.login_api.as_view(), name="login_api"),
     path("delete_login_api/<int:id>", views.delete_login_api.as_view(), name="delete_login_api"),
     path("add_bus_details_api", views.add_bus_details_api.as_view(), name="add_bus_details_api"),
@@ -25,7 +29,9 @@ urlpatterns = [
     path("booked_seat_api", views.booked_seat_api.as_view(), name="booked_seat_api"),
     path("view_seat_book_api/<int:id>/<str:date>", views.view_seat_book_api.as_view(), name="view_seat_book_api"),
     path("generateqr_api", views.generateqr_api.as_view(), name="generateqr_api"),
+    path("company_all_bus_api/<int:id>", views.company_all_bus_api.as_view(), name="company_all_bus_api"),
 
     path("booked_passenger_details_api", views.booked_passenger_details_api.as_view(), name="booked_passenger_details_api"),
+    path("enquiry_message_api", views.enquiry_message_api.as_view(), name="enquiry_message_api"),
 
 ]

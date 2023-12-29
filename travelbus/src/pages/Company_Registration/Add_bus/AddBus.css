@@ -72,6 +72,7 @@
     padding: 10px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.12);
     background-color: transparent;
+    text-transform: capitalize;
 }
 
 .input-data input:focus~label,
@@ -176,6 +177,12 @@
 .upload_bus{
     margin-left: 20px;
     font-size: 17px;
+}
+
+.search_inputd{
+    width: 100%;
+	border: none;
+	/* outline: none; */
 }
 
 @media (max-width: 700px) {

@@ -1,0 +1,82 @@
+.app_nav {
+    background-color: #0c1d74dc;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    height: 110px;
+}
+
+.app_hed {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 3;
+}
+
+.app_foot {
+    background-color: #160a5e;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    position: relative;
+    top: 150px;
+}
+
+.approve_bus {
+    position: relative;
+    top: 130px;
+    color: black;
+    text-transform: capitalize;
+}
+
+.no_pending{
+    color: rgb(123, 120, 120);
+    text-align: center;
+    padding: 100px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.approve_table tbody tr td {
+    border: 1px solid rgba(64, 63, 63, 0.605);
+}
+
+.approve_table thead tr th {
+    border: 2px solid rgba(88, 87, 87, 0.605);
+
+}
+
+.admin_approve {
+    text-align: center;
+}
+
+.admin_approve th {
+    color: black;
+}
+
+.admin_approve th:first-child {
+    width: 15px;
+}
+
+/* .admin_approve th:nth-child(2) {
+	width: 400px;
+} */
+
+.admin_approve th:last-child {
+    width: 150px;
+}
+
+.approveY_button {
+    margin-top: 50%;
+    background-color: rgb(9, 165, 15);
+    border: none;
+    height: 36px;
+    width: 94px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.approveY_button:hover {
+    background-color: rgb(23, 97, 12);
+}

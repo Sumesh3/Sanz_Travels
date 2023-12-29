@@ -43,11 +43,11 @@ export default function Registration_bus() {
             <div className="container registration">
                 <div className="heading">Establishment Registration</div>
                 <form action className="form regform">
-                    <input required className="input" type="text" name="name" placeholder="Name" onChange={addDetails} />
+                    <input required className="input" type="text" name="name" placeholder="Establishment Name" onChange={addDetails} />
                     <input required className="input" type="email" name="email" placeholder="E-mail" onChange={addDetails} />
                     <input required className="input" type="text" name="number" placeholder="Phone number" onChange={addDetails} />
                     <input required className="input" type="password" name="password" placeholder="Password" onChange={addDetails} />
-                    <input required className="input" type="password" name="cpassword" placeholder="Confirm password" />
+                    {/* <input required className="input" type="password" name="cpassword" placeholder="Confirm password" /> */}
                     <input className="login-button" type="submit" value={'Sign Up'} onClick={submit} />
                     <center>
                         <p className="signin">Already have an acount ? <a className='sighinal' href="/login">Sign in</a> </p>

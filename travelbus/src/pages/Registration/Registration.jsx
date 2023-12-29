@@ -22,53 +22,56 @@ export default function Registration() {
 
     console.log(input);
 
-    const [error, setError] = useState({})
-    const [submits, setSubmit] = useState(false)
+    // const [error, setError] = useState({})
+    // const [submits, setSubmit] = useState(false)
 
-    const validate = (value) => {
-        let error = {}
+    // const validate = (value) => {
+    //     let error = {}
 
-        if (value.password != value.cpassword) {
-            // toast.error('Incorrect Password', {
-            //     position: "top-right",
-            //     autoClose: 5000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     theme: "light",
-            //     });
+    //     if (value.password != value.cpassword) {
+    //         toast.error('Incorrect Password', {
+    //             position: "top-right",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             theme: "light",
+    //             });
 
-            error.name = 'Incorrect Password'
-        }
-        return error
-    }
-    console.log(error);
+    //         error.name = 'Incorrect Password'
+    //     }
+    //     return error
+    // }
+    // console.log(error);
+
+
+    // useEffect(() => {
+    //    if(submits){
+    //     setError(validate(input))
+
+    //     console.log(Object.keys(error).length, submits);
+    //     if (Object.keys(error).length === 0) {
+
+    //         axios.post("http://127.0.0.1:8000/api/user_registration_api", input).then((response) => {
+    //             console.log(response.data.message)
+    //         navigate('/login')
+    //         }).catch((error) => {
+    //         })
+    //     }
+    //    }
+    // },[submits])
 
 
     const submit = (event) => {
         event.preventDefault()
-        setSubmit(!submits)
-
-
-    }
-
-    useEffect(() => {
-       if(submits){
-        setError(validate(input))
-
-        console.log(Object.keys(error).length, submits);
-        if (Object.keys(error).length === 0) {
-
-            // axios.post("http://127.0.0.1:8000/api/user_registration_api", input).then((response) => {
-            //     console.log(response.data.message)
+        axios.post("http://127.0.0.1:8000/api/user_registration_api", input).then((response) => {
+            console.log(response.data.message)
             navigate('/login')
-            // }).catch((error) => {
-            // })
-        }
-       }
-    },[submits])
+        }).catch((error) => {
+        })
+    }
 
     return (
         <>
@@ -89,7 +92,7 @@ export default function Registration() {
                     <input required className="input" type="email" name="email" placeholder="E-mail" onChange={addDetails} />
                     <input required className="input" type="text" name="number" placeholder="Phone number" onChange={addDetails} />
                     <input required className="input" type="password" name="password" placeholder="Password" onChange={addDetails} />
-                    <input required className="input" type="password" name="cpassword" placeholder="Confirm password" onChange={addDetails} />
+                    {/* <input required className="input" type="password" name="cpassword" placeholder="Confirm password" onChange={addDetails} /> */}
                     <input className="login-button" type="submit" value={'Sign Up'} onClick={submit} />
                     <center>
                         <p className="signin">Already have an acount ? <Link className='sighinal' to={'/login'}>Sign in</Link></p>
@@ -124,7 +127,6 @@ export default function Registration() {
             <div className='reg_foot'>
                 <FooterB></FooterB>
             </div>
-
         </>
     )
 }

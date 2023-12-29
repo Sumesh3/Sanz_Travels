@@ -102,5 +102,15 @@
 .btnbooknow:hover {
     background-color: rgb(134, 218, 7);
     color: #030303;
+}
 
+.not_available{
+    padding-top: 20px;
+    padding-bottom: 40px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #8d0202;
+    position: relative;
+    left: 40%;
 }

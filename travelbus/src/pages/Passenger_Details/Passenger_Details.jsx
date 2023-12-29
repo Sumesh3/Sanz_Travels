@@ -8,7 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-const Component = () => {
+const Component = ({storages}) => {
+
+    console.log(storages);
 
     const seat_count = sessionStorage.getItem("no_of_seat")
     const numberOfComponents = seat_count;
@@ -46,17 +48,12 @@ const Component = () => {
 
     console.log(passengerDetails);
 
-    
-
-
-    // name={`Name${i}`}
-
 
     const components = Array.from({ length: numberOfComponents }, (_, i) => (
         <div key={i}>
             < section className="container pass_details_main" >
                 <header>Passenger {1 + i} </header>
-                <form className="form form_pass" action="#">
+                <form className="form form_pass">
                     <div className="input-box input_box_pass">
                         <label>Full Name</label>
                         <input className='input-in' required placeholder="Enter full name" name='Name' onChange={(event) => datas(event, i)} type="text" />
@@ -93,8 +90,8 @@ const Component = () => {
     const PassengerDetails = () => {
 
         // passengerDetails.map((data,key)=>(
-
         // ))
+        
         axios.post("http://127.0.0.1:8000/api/booked_passenger_details_api", passengerDetails).then((response) => {
             console.log(response.data.message)
             navigate('/payment_type')

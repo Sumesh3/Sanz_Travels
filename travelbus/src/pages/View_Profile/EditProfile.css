@@ -1,0 +1,106 @@
+.close_button_add {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    font-size: 17px;
+}
+
+.edit_main{
+    font-family: Arial, sans-serif;
+    margin-top: 60px;
+}
+
+.profile-container_ed {
+    max-width: 600px;
+    margin: 30px auto;
+    background: linear-gradient(0deg, rgb(181, 170, 241)  0%, rgb(245, 211, 211) 100%);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.594);
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.profile-picture_ed {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+    border: 3px solid #060605;
+}
+
+.user-infot {
+    text-align: center;
+    width: 100%;
+}
+
+.user-name-input {
+    font-size: 25px;
+    font-weight: 700;
+    color: #2c0512;
+    text-transform: uppercase;
+    text-align: center;
+    background: #ecf0f3;
+    border: none;
+    padding: 8px 0px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+    border-inline: 1px solid transparent;
+}
+
+.user-number-input{
+    color: #2c0512;
+    margin-top: 10px;
+    text-transform: uppercase;
+    background: #ecf0f3;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+    border-inline: 1px solid transparent;
+}
+
+.user-contactt {
+    position: relative;
+    left: 30%;
+    width: 100%;
+    margin-top: 20px;
+    color: #444;
+    display: grid;
+    overflow: hidden;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.submit_buttn {
+    text-decoration: none;
+    background-color: #1f3cce;
+    color: #fff;
+    border: none;
+    margin-top: 30px;
+    border-radius: 5px;
+    padding: 6px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.submit_buttn:hover {
+    background-color: #120a7d;
+}
