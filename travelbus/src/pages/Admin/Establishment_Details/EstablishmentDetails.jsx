@@ -5,10 +5,12 @@ import NavBar from '../../../components/navBar/NavBar'
 import NavBar2 from '../../../components/navBar/NavBar2'
 import axios from 'axios'
 import FooterB from '../../FooterB/FooterB'
+import ShowBusses from './ShowBusses'
 
 export default function EstablishmentDetails() {
 
     const [companyDetails, getCompanyDetails] = useState([])
+    const [allBusses, getAllBusses] = useState([])
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/all_company_api').then((response) => {
@@ -22,11 +24,12 @@ export default function EstablishmentDetails() {
     console.log(companyDetails);
 
     const deletee = (deleteid) => {
-        axios.delete(`http://127.0.0.1:8000/api/delete_company_api/${deleteid}`).then((response) => {
+        axios.delete(`http://127.0.0.1:8000/api/delete_login_api/${deleteid}`).then((response) => {
             console.log(response);
             window.location.reload()
         })
     }
+
 
     return (
         <>
@@ -39,45 +42,71 @@ export default function EstablishmentDetails() {
                 <NavBar2></NavBar2>
             </div>
             <div className='container'>
-                <div className="admin-view-user">
+                <div className="admin_view_est">
 
-                    <table className="table table-admin table-bordered" border={1} cellPadding={20} cellSpacing={0}>
-                        <thead>
-                            <tr>
-                                <th>Sl.No</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <>
-                            {
-                                companyDetails[0] == null ?
-                                    <div className='no_pending'>Empty</div>
-                                    :
-                                    companyDetails.map((data, key) => (
-                                        <>
+                    {
+                        companyDetails[0] == null ?
+                            <div className='loading_est'>
+                                <center>
+                                    <div class="loading_es">
+                                        <span class="l">E</span>
+                                        <span class="o">m</span>
+                                        <span class="a">p</span>
+                                        <span class="d">t</span>
+                                        <span class="i">y</span>
+                                        <span class="n">.</span>
+                                        <span class="g">.</span>
+                                        <span class="d1">.</span>
+                                        <span class="d2">.</span>
+                                        <div class="load_es">
+                                            <div class="progress"></div>
+                                            <div class="progress"></div>
+                                            <div class="progress"></div>
+                                            <div class="progress"></div>
+                                        </div>
+                                    </div>
+                                </center>
+                            </div>
+                            :
+                            <table className="table table-admin resp_tab_cm table-bordered" border={1} cellPadding={20} cellSpacing={0}>
+                                <thead>
+                                    <tr>
+                                        <th>Sl.No</th>
+                                        <th>Name</th>
+                                        <th>Their Busses</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <>
+                                    {
+                                        companyDetails.map((data, key) => (
+
                                             <tbody>
                                                 <tr>
                                                     <td>{key + 1}</td>
-                                                    <td>{data.name}</td>
+                                                    <td style={{ textTransform: 'capitalize' }}>{data.name}</td>
+                                                    <td>
+                                                        <button className='btn_est' onClick={() => { getAllBusses(data.login_id) }}><ShowBusses data={allBusses}></ShowBusses></button>
+                                                    </td>
                                                     <td>{data.email}</td>
                                                     <td>{data.number}</td>
                                                     <td>
                                                         <center>
-                                                            <button className="btn btn-danger text-dark" onClick={() => { deletee(data.id) }}>Delete</button>
+                                                            <button style={{ cursor: 'pointer' }} className="btn btn-danger text-#bcbac6" onClick={() => { deletee(data.login_id) }}>Delete</button>
                                                         </center>
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </>
-                                    ))
-                            }
-                        </>
-                    </table>
+
+                                        ))
+                                    }
+                                </>
+                            </table>
+                    }
                 </div>
-            </div>
+            </div >
 
             <div className='reg_foot'>
                 <FooterB></FooterB>

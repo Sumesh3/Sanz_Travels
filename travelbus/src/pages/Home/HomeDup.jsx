@@ -32,7 +32,7 @@ export default function HomeDup() {
                                                 <div className="button home_slider_button"><div className="button_bcg" />
                                                     {
                                                         user ?
-                                                            <Link to={'/'}>explore now</Link>
+                                                            <Link to={'/searchnormal'}>explore now<span /><span /><span /></Link>
                                                             :
                                                             <Link to={'/login'}>explore now<span /><span /><span /></Link>
                                                     }
@@ -64,7 +64,7 @@ export default function HomeDup() {
                                                 <div className="button home_slider_button"><div className="button_bcg" />
                                                     {
                                                         user ?
-                                                            <Link to={'/'}>explore now<span /><span /><span /></Link>
+                                                            <Link to={'/searchnormal'}>explore now<span /><span /><span /></Link>
                                                             :
                                                             <Link to={'/login'}>explore now<span /><span /><span /></Link>
                                                     }
@@ -95,7 +95,7 @@ export default function HomeDup() {
                                                 <div className="button home_slider_button"><div className="button_bcg" />
                                                     {
                                                         user ?
-                                                            <Link to={'/'}>explore now<span /><span /><span /></Link>
+                                                            <Link to={'/searchnormal'}>explore now<span /><span /><span /></Link>
                                                             :
                                                             <Link to={'/login'}>explore now<span /><span /><span /></Link>
                                                     }

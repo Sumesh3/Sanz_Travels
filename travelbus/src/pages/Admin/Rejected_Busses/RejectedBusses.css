@@ -22,53 +22,53 @@
     top: 150px;
 }
 
-.approve_bus {
-    position: relative;
-    top: 130px;
+.rejected_busses {
+    margin-top: 140px;
+    text-transform: capitalize;
     color: black;
+}
+
+.rejected_bus_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: -120px;
+    color: #292525;
     text-transform: capitalize;
 }
 
-.no_pending{
-    color: rgb(123, 120, 120);
-    text-align: center;
-    padding: 100px;
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.approve_table tbody tr td {
-    border: 1px solid rgba(64, 63, 63, 0.605);
-}
-
-.approve_table thead tr th {
-    border: 2px solid rgba(88, 87, 87, 0.605);
-
-}
-
-.admin_approve {
+.rejected_bus_table td {
+    border: 1px solid #7b7b7b;
+    padding: 8px;
     text-align: center;
 }
 
-.admin_approve th {
-    color: black;
+.rejected_bus_table th {
+    border: 2px solid #939191;
+    padding: 8px;
+    text-align: center;
 }
 
-.admin_approve th:first-child {
-    width: 15px;
+.rejected_bus_table th:first-child {
+    width: 65px;
 }
 
-/* .admin_approve th:nth-child(2) {
-	width: 400px;
-} */
-
-.admin_approve th:last-child {
-    width: 150px;
-}
-
-.approveY_button {
-    margin-top: 50%;
+.approve_r_button {
     background-color: rgb(9, 165, 15);
+    border: none;
+    height: 36px;
+    width: 94px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.approve_r_button:hover {
+    background-color: rgb(23, 97, 12);
+}
+
+.Delete_r_button {
+    background-color: rgb(204, 2, 2);
     border: none;
     height: 36px;
     width: 94px;
@@ -77,6 +77,164 @@
     color: #fff;
 }
 
-.approveY_button:hover {
-    background-color: rgb(23, 97, 12);
+.Delete_r_button:hover {
+    background-color: rgb(164, 1, 1);
+}
+
+.rejected_bus_tr td {
+    border: none;
+    text-align: left;
+    padding: 2px;
+    padding-right: 8px;
+    text-transform: capitalize;
+}
+
+.eye {
+    width: 20px;
+    height: 8px;
+    background-color: rgba(240, 220, 220, 1);
+    border-radius: 0px 0px 20px 20px;
+    position: relative;
+    left: 10px;
+    top: 40px;
+    box-shadow: 40px 0px 0px 0px rgba(240, 220, 220, 1);
+}
+
+.head {
+    backface-visibility: hidden;
+    position: relative;
+    margin: -250px auto;
+    width: 80px;
+    height: 80px;
+    background-color: #111;
+    border-radius: 50px;
+    box-shadow: inset -4px 2px 0px 0px rgba(240, 220, 220, 1);
+    animation: headAnim 1.5s infinite alternate;
+    animation-timing-function: ease-out;
+}
+
+.body {
+    position: relative;
+    margin: 90px auto;
+    width: 140px;
+    height: 120px;
+    background-color: #111;
+    border-radius: 50px/25px;
+    box-shadow: inset -5px 2px 0px 0px rgba(240, 220, 220, 1);
+    animation: bodyAnim 1.5s infinite alternate;
+    animation-timing-function: ease-out;
+}
+
+@keyframes headAnim {
+    0% {
+        top: 0px;
+    }
+
+    50% {
+        top: 10px;
+    }
+
+    100% {
+        top: 0px;
+    }
+}
+
+@keyframes bodyAnim {
+    0% {
+        top: -5px;
+    }
+
+    50% {
+        top: 10px;
+    }
+
+    100% {
+        top: -5px;
+    }
+}
+
+.circ {
+    backface-visibility: hidden;
+    margin: 0px auto;
+    width: 180px;
+    height: 180px;
+    border-radius: 0px 0px 50px 50px;
+    position: relative;
+    z-index: -1;
+    left: 0%;
+    top: 70px;
+    overflow: hidden;
+}
+
+.hands {
+    margin-top: 140px;
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    background-color: #111;
+    border-radius: 20px;
+    box-shadow: -1px -4px 0px 0px rgba(240, 220, 220, 1);
+    transform: rotate(45deg);
+    top: 75%;
+    left: 16%;
+    z-index: 1;
+    animation: bodyAnim 1.5s infinite alternate;
+    animation-timing-function: ease-out;
+}
+
+.load_text {
+    position: absolute;
+    width: 7ch;
+    height: 32px;
+    text-align: left;
+    line-height: 32px;
+    margin: -10px auto;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: rgb(169, 9, 9);
+    left: 19%;
+    top: 5%;
+    animation: fontAnim 1.75s infinite;
+    animation-timing-function: ease-out;
+    word-wrap: break-word;
+    display: block;
+    overflow: hidden;
+}
+
+@keyframes fontAnim {
+    0% {
+        width: 7ch;
+    }
+
+    16% {
+        width: 8ch;
+    }
+
+    32% {
+        width: 9ch;
+    }
+
+    48% {
+        width: 10ch;
+    }
+
+    64% {
+        width: 11ch;
+    }
+
+    80% {
+        width: 12ch;
+    }
+
+    100% {
+        width: 13ch;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .rejected_bus_table {
+        overflow-x: auto;
+        display: block;
+    }
 }

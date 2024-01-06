@@ -1,0 +1,55 @@
+.close_button_add {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    font-size: 17px;
+}
+
+.edit_main{
+    font-family: Arial, sans-serif;
+    margin-top: 60px;
+}
+
+.show_busses {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: aliceblue;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.594);
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.main_table_bus {
+    color: black;
+    text-transform: capitalize;
+    overflow: hidden;
+}
+
+.table_bus th:first-child {
+    width: 15px;
+}
+
+.busses_table tbody tr td {
+    border: 2px solid rgba(64, 63, 63, 0.605);
+    text-align: center;
+}
+
+.busses_table thead tr th {
+    border: 2px solid rgb(10, 2, 2);
+    text-align: center;
+}
+
+.show_bus_modal{
+    padding: 3px 19px;
+    border: none;
+}

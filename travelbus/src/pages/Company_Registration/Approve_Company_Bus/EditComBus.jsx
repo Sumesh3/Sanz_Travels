@@ -138,7 +138,7 @@ export default function EditComBus({ storage }) {
                                                         Start Time
                                                     </td>
                                                     <td>
-                                                        : <input name='start_time' className='user-number-inputo' type="text" value={approveBusses.start_time} onChange={editedr} />
+                                                        : <input name='start_time' className='user-number-inputo' type="time" value={approveBusses.start_time} onChange={editedr} />
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -146,7 +146,7 @@ export default function EditComBus({ storage }) {
                                                         End Time
                                                     </td>
                                                     <td>
-                                                        : <input name='end_time' className='user-number-inputo' type="text" value={approveBusses.end_time} onChange={editedr} />
+                                                        : <input name='end_time' className='user-number-inputo' type="time" value={approveBusses.end_time} onChange={editedr} />
                                                     </td>
                                                 </tr>
                                                 <tr>

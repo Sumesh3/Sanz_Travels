@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './AddBus.css'
-
 import NavBar from '../../../components/navBar/NavBar'
 import NavBar2 from '../../../components/navBar/NavBar2'
 import Header from '../../../components/header/Header'
@@ -11,12 +10,22 @@ import axios from 'axios'
 export default function AddBus() {
 
   const login_id = localStorage.getItem("login_id")
-  const company_name = localStorage.getItem("name")
-  console.log(login_id);
+
+  const [companyViews, getcompanyViews] = useState({})
+  const userid = localStorage.getItem('user_id');
+
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/api/single_company_api/${userid}`).then((response) => {
+      getcompanyViews(response.data);
+      sessionStorage.setItem("cname", response.data.name)
+    })
+  }, [userid])
+
+  const company_name = sessionStorage.getItem("cname");
 
   const [input, getInputs] = useState({
     login_id: login_id,
-    company_name:company_name
+    company_name: company_name
   })
 
   console.log(input);
@@ -26,9 +35,9 @@ export default function AddBus() {
   const navigate = useNavigate()
 
   const addDetails = (event) => {
-    const name = event.target.name
-    const value = event.target.value
-    getInputs({ ...input, [name]: value })
+    const name = event.target.name;
+    const value = event.target.value;
+    getInputs({ ...input, [name]: value });
   }
   // const handeleImage=(event)=>{
   //   const name = event.target.name
@@ -37,26 +46,26 @@ export default function AddBus() {
   // }
 
   const submit = (event) => {
-    event.preventDefault()
-    const data = new FormData()
+    event.preventDefault();
+    const data = new FormData();
     if (file) {
-      data.append("login_id", login_id)
-      data.append("img", file)
-      data.append("company_name", company_name)
-      data.append("bus_name", input.bus_name)
-      data.append("bus_number", input.bus_number)
-      data.append("bording_point", input.bording_point)
-      data.append("droppinging_point", input.droppinging_point)
-      data.append("start_time", input.start_time)
-      data.append("end_time", input.end_time)
-      data.append("fare", input.fare)
-      data.append("total_seats", input.total_seats)
+      data.append("login_id", login_id);
+      data.append("img", file);
+;      data.append("company_name", company_name);
+      data.append("bus_name", input.bus_name);
+      data.append("bus_number", input.bus_number);
+      data.append("bording_point", input.bording_point);
+      data.append("droppinging_point", input.droppinging_point);
+      data.append("start_time", input.start_time);
+      data.append("end_time", input.end_time);
+      data.append("fare", input.fare);
+;      data.append("total_seats", input.total_seats);
       // data.append("available_dates", input.available_dates)
 
       axios.post("http://127.0.0.1:8000/api/add_bus_details_api", data).then((response) => {
-        console.log(response.data.message)
-        navigate('/')
-        window.location.reload()
+        console.log(response.data.message);
+        navigate('/');
+        window.location.reload();
       })
         .catch((error) => {
           console.log(error);
@@ -64,9 +73,9 @@ export default function AddBus() {
     }
     else {
       axios.post("http://127.0.0.1:8000/api/add_bus_details_api", input).then((response) => {
-        console.log(response.data.message)
-        navigate('/')
-        window.location.reload()
+        console.log(response.data.message);
+        navigate('/');
+        window.location.reload();
       })
         .catch((error) => {
           console.log(error);
@@ -93,7 +102,7 @@ export default function AddBus() {
           <form className='bus_forms'>
             <div className="form-row row">
               <div className="input-data">
-                <input type="text" required name='company_name'  value={company_name}/>
+                <input type="text" required name='company_name' value={companyViews.name} />
                 <div className="underline" />
                 <label htmlFor>Company Name</label>
               </div>
@@ -134,12 +143,12 @@ export default function AddBus() {
                 <label htmlFor>Dropping Point</label>
               </div>
               <div className="input-data">
-                <input type="text" required name='start_time' onChange={addDetails} />
+                <input type="time" required name='start_time' onChange={addDetails} />
                 <div className="underline" />
                 <label htmlFor>Start Time</label>
               </div>
               <div className="input-data">
-                <input type="text" required name='end_time' onChange={addDetails} />
+                <input type="time" className='aaaw' required name='end_time' onChange={addDetails} />
                 <div className="underline" />
                 <label htmlFor>End Time</label>
               </div>
@@ -153,6 +162,7 @@ export default function AddBus() {
                 <div className="underline" />
                 <label htmlFor>Total Seats : 40</label>
               </div>
+
 
               {/* <div className="input-data">
                 <input type="text" required name='available_dates' onChange={addDetails}/>

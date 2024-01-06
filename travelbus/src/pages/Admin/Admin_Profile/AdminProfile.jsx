@@ -10,7 +10,6 @@ import FooterB from '../../FooterB/FooterB';
 export default function AdminProfile() {
 
     const [adprviews, getadprviews] = useState({})
-
     const userid = localStorage.getItem('user_id')
 
     useEffect(() => {
@@ -24,7 +23,6 @@ export default function AdminProfile() {
             <div className='reg_head'>
                 <Header></Header>
             </div>
-
             <div className='reg_nav'>
                 <NavBar></NavBar>
                 <NavBar2></NavBar2>

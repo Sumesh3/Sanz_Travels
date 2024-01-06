@@ -47,7 +47,7 @@ export default function DebitCard() {
 			today: today
 		}
 		axios.post("http://127.0.0.1:8000/api/booked_seat_api", data).then((response) => {
-			navigate('/payment_successfull')
+			navigate(`/payment_successfull/${response.data.data.id}`)
 			window.location.reload()
 		}).catch((error) => {
 		})

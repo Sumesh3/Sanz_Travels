@@ -87,7 +87,7 @@ export default function Registration() {
 
             <div className="container registration">
                 <div className="heading">Create Account</div>
-                <form className="form regform" onSubmit={(event) => event.preventDefault()}>
+                <form className="form regform">
                     <input required className="input" type="text" name="name" placeholder="Name" onChange={addDetails} />
                     <input required className="input" type="email" name="email" placeholder="E-mail" onChange={addDetails} />
                     <input required className="input" type="text" name="number" placeholder="Phone number" onChange={addDetails} />

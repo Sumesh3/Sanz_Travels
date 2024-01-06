@@ -9,7 +9,6 @@ import AddBus from './pages/Company_Registration/Add_bus/AddBus';
 import ApproveBus from './pages/Admin/Approve_Bus/ApproveBus';
 import BusDetails from './pages/Admin/Bus_Details/BusDetails';
 import SeatChart from './pages/Seat_Chart/SeatChart';
-import CheckOut from './pages/Check_out/CheckOut';
 import Payment_type from './pages/Check_out/Payment_type';
 import Passenger_Details from './pages/Passenger_Details/Passenger_Details';
 import DebitCard from './pages/Debit_Card/DebitCard';
@@ -26,6 +25,10 @@ import CompanyProfile from './pages/Company_Profile/CompanyProfile';
 import ApproveCompany from './pages/Company_Registration/Approve_Company_Bus/ApproveCompany';
 import RejectedCompany from './pages/Company_Registration/Rejected_Company_Bus/RejectedCompany';
 import EditComBus from './pages/Company_Registration/Approve_Company_Bus/EditComBus';
+import SearchNormal from './pages/Search/SearchNormal';
+import ViewTickets from './pages/View_Tickets/ViewTickets';
+import AllBookedTickets from './pages/Admin/All_Booked_tickets/AllBookedTickets';
+import BookedTicketCo from './pages/Company_Registration/Booked_Tickets_co/BookedTicketCo';
 
 
 function App() {
@@ -41,11 +44,10 @@ function App() {
           <Route path='/approvebus' element={<ApproveBus/>} />
           <Route path='/busdetails' element={<BusDetails/>} />
           <Route exact path='/seatchart' element={<SeatChart/>} />
-          <Route path='/checkout' element={<CheckOut/>} />
           <Route path='/payment_type' element={<Payment_type/>} />
           <Route path='/passenger_details' element={<Passenger_Details/>} />
           <Route path='/debitCard' element={<DebitCard/>} />
-          <Route path='/payment_successfull' element={<PaymentSuccessfull/>} />
+          <Route path='/payment_successfull/:id' element={<PaymentSuccessfull/>} />
           <Route path='/about' element={<About/>} />
           <Route path='/blog' element={<Blog/>} />
           <Route path='/viewprofile' element={<ViewProfile/>} />
@@ -57,7 +59,11 @@ function App() {
           <Route path='/companyprofile' element={<CompanyProfile/>} />
           <Route path='/approvecompanybus' element={<ApproveCompany/>} />
           <Route path='/rejectedcompanybus' element={<RejectedCompany/>} />
-          <Route path='/editcombus/:id' element={<EditComBus/>} />
+          <Route path='/editcombus' element={<EditComBus/>} />
+          <Route path='/searchnormal' element={<SearchNormal/>} />
+          <Route path='/viewtickets' element={<ViewTickets/>} />
+          <Route path='/bookedticket' element={<AllBookedTickets/>} />
+          <Route path='/bookedticketco' element={<BookedTicketCo/>} />
         </Routes>
       </BrowserRouter>
     </>

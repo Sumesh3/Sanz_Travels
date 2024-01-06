@@ -1,4 +1,4 @@
-.bus_img23 {
+.bus_img99 {
     position: relative;
     background-size: contain;
     background-repeat: no-repeat;
@@ -31,59 +31,48 @@
     top: 150px;
 }
 
-.approve_com_bus {
+.approved_co_bus {
     position: relative;
-    top: 130px;
+    margin-top: 130px;
     color: black;
     text-transform: capitalize;
-    overflow: hidden;
-}
-
-.no_pending{
-    color: rgb(123, 120, 120);
-    text-align: center;
-    padding: 100px;
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.approve_com_table{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.approve_com_table tbody tr td {
-    border: 1px solid rgba(64, 63, 63, 0.605);
+.approved_co_bus_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: -120px;
+    color: #292525;
+    text-transform: capitalize;
 }
 
-.approve_com_table thead tr th {
-    border: 2px solid rgba(88, 87, 87, 0.605);
-
-}
-
-.admin_com_approve {
+.approved_co_bus_table td {
+    border: 1px solid #7b7b7b;
+    padding: 8px;
     text-align: center;
 }
 
-.admin_com_approve th {
-    color: black;
+.approved_co_bus_table th {
+    border: 2px solid #939191;
+    padding: 8px;
+    text-align: center;
 }
 
-.admin_com_approve th:first-child {
-    width: 15px;
+.approved_co_bus_table th:first-child {
+    width: 65px;
 }
 
-.admin_com_approve th:nth-child(2) {
-    width: 250px;
-}
-
-.admin_com_approve th:last-child {
-    width: 150px;
+.appr_co_bus td {
+    border: none;
+    text-align: left;
+    padding: 2px;
+    padding-right: 8px;
+    text-transform: capitalize;
 }
 
 .pending_status{
     position: relative;
-    margin-top: 50%;
-    text-align: center;
     background-color: rgb(126, 126, 126);
     padding-right: 5px;
     border-radius: 5px;
@@ -94,8 +83,6 @@
 
 .approved_status{
     position: relative;
-    margin-top: 50%;
-    text-align: center;
     background-color: rgb(4, 34, 169);
     padding-left: 5px;
     padding-right: 5px;
@@ -105,14 +92,7 @@
     color: rgb(255, 255, 255);
 }
 
-
-
-
-
-
-
 .edit_com_button {
-    margin-top: 25%;
     background-color: rgb(3, 179, 0);
     border: none;
     height: 30px;
@@ -139,4 +119,92 @@
 
 .delete_com_button:hover {
     background-color: rgb(164, 1, 1);
+}
+
+.pry_text{
+    text-align: center;
+    font-size: 40px;
+    color: #090707;
+    font-weight: 700;
+    letter-spacing: 5px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.pyramid-loader {
+  position: relative;
+  width: 100%;
+  height: 230px;
+  display: block;
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg);
+  margin-bottom: -20px;
+}
+
+.wrapper_pr {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.pyramid-loader .wrapper_pr .side {
+  width: 110px;
+  height: 110px;
+  background: linear-gradient(to bottom right, #FFA500, #FF4500);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  transform-origin: center top;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.pyramid-loader .wrapper_pr .side1 {
+  transform: rotateZ(-30deg) rotateY(90deg);
+  background: linear-gradient(to bottom right, #FF4500, #FFA500);
+}
+
+.pyramid-loader .wrapper_pr .side2 {
+  transform: rotateZ(30deg) rotateY(90deg);
+  background: linear-gradient(to bottom right, #FFA500, #FF4500);
+}
+
+.pyramid-loader .wrapper_pr .side3 {
+  transform: rotateX(30deg);
+  background: linear-gradient(to bottom right, #FFA500, #FF4500);
+}
+
+.pyramid-loader .wrapper_pr .side4 {
+  transform: rotateX(-30deg);
+  background: linear-gradient(to bottom right, #FF4500, #FFA500);
+}
+
+.pyramid-loader .wrapper_pr .shadow {
+  width: 100px;
+  height: 100px;
+  background: #FF8C00;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  transform: rotateX(90deg) translateZ(-40px);
+  filter: blur(12px);
+}
+
+@media screen and (max-width: 700px) {
+    .approved_co_bus_table {
+        overflow-x: auto;
+        display: block;
+    }
 }

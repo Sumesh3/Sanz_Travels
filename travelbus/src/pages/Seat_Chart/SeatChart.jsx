@@ -6,7 +6,6 @@ import NavBar2 from '../../components/navBar/NavBar2'
 import FooterB from '../FooterB/FooterB'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import Payment_type from '../../pages/Check_out/Payment_type'
 
 export default function SeatChart() {
 
@@ -58,23 +57,6 @@ export default function SeatChart() {
         const value = event.target.value
         setDate({ ...date, [name]: value })
     }
-
-    // const Proceed = (event) => {
-    // const data = {
-    //     busid: busid,
-    //     login_id: login_id,
-    //     no_of_seat: count.length,
-    //     seat_no: count,
-    //     total_fare: total_fare,
-    //     today: date.today
-    // }
-    // axios.post("http://127.0.0.1:8000/api/booked_seat_api", data).then((response) => {
-    //     sessionStorage.setItem("no_of_seat", data.no_of_seat)
-    //     navigate('/passenger_details')
-    //     window.location.reload()
-    // }).catch((error) => {
-    // })
-    // }
 
     const Proceed = (event) => {
 

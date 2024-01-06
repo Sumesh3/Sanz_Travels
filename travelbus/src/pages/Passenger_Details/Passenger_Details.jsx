@@ -8,28 +8,30 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-const Component = ({storages}) => {
+const Component = () => {
 
-    console.log(storages);
+
+    const busid = sessionStorage.getItem('busid')
+
+    const seat_no1 = [sessionStorage.getItem('seat_no')].map(String)
+    const seat_nos = seat_no1[0].split(',')
+
+
+    console.log(typeof (sessionStorage.getItem('seat_no')));
 
     const seat_count = sessionStorage.getItem("no_of_seat")
     const numberOfComponents = seat_count;
-
-
-    // const [passengerDetails, setPassengerDetails] = useState([{
-    //     login_id: localStorage.getItem("login_id"),
-    //     Name: "",
-    //     Gender: "",
-    //     Age: ""
-    // }]);
 
     const [passengerDetails, setPassengerDetails] = useState(
         Array.from({ length: seat_count }, (_, i) => ({
             login_id: localStorage.getItem("login_id"),
             today: sessionStorage.getItem("today"),
+            busid: busid,
+            seat_no: seat_nos,
             Name: "",
             Gender: "",
-            Age: ""
+            Age: "",
+            seat:seat_nos[i]
         }))
     );
 
@@ -46,13 +48,21 @@ const Component = ({storages}) => {
         setPassengerDetails(updatedPassengerDetails);
     }
 
+
     console.log(passengerDetails);
+
+    // for (let i = 0; i < seat_nos.length; i++) {
+    //     const aaaa = seat_nos[i];
+    //     console.log(aaaa);
+    // }
 
 
     const components = Array.from({ length: numberOfComponents }, (_, i) => (
+
         <div key={i}>
+
             < section className="container pass_details_main" >
-                <header>Passenger {1 + i} </header>
+                <header>Passenger {1 + i} </header> Seat no. {seat_nos[i]}
                 <form className="form form_pass">
                     <div className="input-box input_box_pass">
                         <label>Full Name</label>
@@ -85,16 +95,13 @@ const Component = ({storages}) => {
 
     const navigate = useNavigate()
 
-    
+
 
     const PassengerDetails = () => {
 
-        // passengerDetails.map((data,key)=>(
-        // ))
-        
         axios.post("http://127.0.0.1:8000/api/booked_passenger_details_api", passengerDetails).then((response) => {
-            console.log(response.data.message)
             navigate('/payment_type')
+            window.location.reload()
         }).catch((error) => {
         })
     }

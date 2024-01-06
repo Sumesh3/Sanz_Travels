@@ -81,9 +81,10 @@
 .textarea textarea:valid~label {
     transform: translateY(-20px);
     font-size: 14px;
-    color: #3498db; 
+    color: #3498db;
 }
-.input-data input:focus{
+
+.input-data input:focus {
     border: 0px solid rgb(242, 239, 239);
 
 }
@@ -166,7 +167,7 @@
     z-index: 2;
 }
 
-.reg_foot{
+.reg_foot {
     background-color: #160a5e;
     padding-top: 40px;
     padding-bottom: 10px;
@@ -174,16 +175,17 @@
     top: 150px;
 }
 
-.upload_bus{
+.upload_bus {
     margin-left: 20px;
     font-size: 17px;
 }
 
-.search_inputd{
+.search_inputd {
     width: 100%;
-	border: none;
-	/* outline: none; */
+    border: none;
+    /* outline: none; */
 }
+
 
 @media (max-width: 700px) {
     .container .text {

@@ -66,7 +66,7 @@ export default function Search() {
                                 <form className="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                     <div className="search_item">
                                         <div>From</div>
-                                        <input className="destination search_input" list="From" placeholder="Select the recommended option..." name='starting' onChange={searchdta}/>
+                                        <input className="destination search_input" list="From" placeholder="Select the recommended option..." name='starting' onChange={searchdta} />
                                         <datalist id="From">
                                             <option>Kozhikode</option>
                                             <option>Ernakulam</option>
@@ -79,9 +79,9 @@ export default function Search() {
                                     </div>
                                     <div className="search_item">
                                         <div>destination</div>
-                                        <input className="destination search_input" list="destination" placeholder="Select the recommended option..." name='ending' onChange={searchdta}/>
+                                        <input className="destination search_input" list="destination" placeholder="Select the recommended option..." name='ending' onChange={searchdta} />
                                         <datalist id="destination">
-                                        <option>Kozhikode</option>
+                                            <option>Kozhikode</option>
                                             <option>Ernakulam</option>
                                             <option>Trivandrum</option>
                                             <option>Chennai</option>
@@ -91,7 +91,19 @@ export default function Search() {
                                         {/* <input type="text" className="destination search_input" required="required" name='ending' onChange={searchdta} /> */}
                                     </div>
 
-                                    <button className="button search_button" onClick={SearchBtn}>search<span /><span /><span /></button>
+                                    <button className="btn1" type="button" onClick={SearchBtn}>
+                                        <strong className='search_name'>SEARCH</strong>
+                                        <div id="container-stars">
+                                            <div id="stars"></div>
+                                        </div>
+
+                                        <div id="glow">
+                                            <div className="circle"></div>
+                                            <div className="circle"></div>
+                                        </div>
+                                    </button>
+
+                                    {/* <button className="button search_button" onClick={SearchBtn}>search<span /><span /><span /></button> */}
                                 </form>
                             </div>
                         </div>

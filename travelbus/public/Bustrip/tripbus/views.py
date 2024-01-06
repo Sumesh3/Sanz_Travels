@@ -343,32 +343,22 @@ class company_all_bus_api(GenericAPIView):
         else:
             return Response({'message': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-
 class search_bus(GenericAPIView):
     def post(self, request):
         starting = request.data.get('starting')
         ending = request.data.get('ending')
+        
         if (starting != "" and ending != ""):
+            # starting and ending:
             queryset = Bus_TB.objects.filter(
-                Q(bording_point__icontains=starting) and Q(
-                    droppinging_point__icontains=ending)
-            ).values()
-            print(queryset)
-
-            i = Bus_TB.objects.filter(bording_point__icontains=starting) and Bus_TB.objects.filter(
-                droppinging_point__icontains=ending)
-            for dta in i:
-                print(dta)
-
+                Q(bording_point__icontains=starting) & Q(droppinging_point__icontains=ending)).values()
+            
             for obj in queryset:
+                obj['img'] = settings.MEDIA_URL + str(obj['img'])
 
-                obj['img'] = settings.MEDIA_URL+str(obj['img'])
-            return Response({'data': queryset, 'message': 'Successfully fetched', 'success': True}, status=status.HTTP_200_OK)
+            return Response({'data': list(queryset), 'message': 'Successfully fetched', 'success': True}, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'no result found', 'success': True}, status=status.HTTP_200_OK)
-
 
 # class search_bus2(GenericAPIView):
 #     def post(self, request):
@@ -381,6 +371,7 @@ class search_bus(GenericAPIView):
 
 #         data = [{'company_name':info.company_name} for info in i]
 #         return Response ({'data':data,'message':'Successfully fetched', 'success':True}, status=status.HTTP_200_OK)
+
 
 class booked_seat_api(GenericAPIView):
     Serializer_class = Booked_seatSerializer
@@ -397,8 +388,18 @@ class booked_seat_api(GenericAPIView):
 
         serializer = self.Serializer_class(
             data={'busid': busid, 'login_id': login_id, 'no_of_seat': no_of_seat, 'seat_no': seat_no, 'total_fare': total_fare, 'today': today})
+        
         if serializer.is_valid():
             serializer.save()
+
+        queryset = Passenger_Details.objects.filter(busid=busid, seat_no=seat_no, today=today, login_id=login_id)
+        if (queryset.count() > 0):
+            for passenger_detail in queryset:
+                print(passenger_detail.statuz)
+                passenger_detail.statuz=1
+                passenger_detail.save()
+
+        
             return Response({'data': serializer.data, 'message': 'Successfull', 'success': 1}, status=status.HTTP_200_OK)
         return Response({'data': serializer.errors, 'message': 'failed', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -437,10 +438,14 @@ class booked_passenger_details_api(GenericAPIView):
             gender = data.get('Gender')
             age = data.get('Age')
             today = data.get('today')
+            seat_no = data.get('seat_no')
+            seat_no = str(seat_no)
+            busid = data.get('busid')
+            seat = data.get('seat')
             statuz = 0
 
             serializer = self.serializer_class(
-                data={'login_id': login_id, 'Name': name, 'Gender': gender, 'Age': age, 'today': today, 'statuz': statuz})
+                data={'login_id': login_id, 'Name': name, 'Gender': gender, 'Age': age, 'today': today, 'busid':busid, 'seat_no':seat_no, 'statuz': statuz, 'seat':seat})
 
             if serializer.is_valid():
                 serializer.save()
@@ -449,6 +454,42 @@ class booked_passenger_details_api(GenericAPIView):
                 print(serializer.errors)
 
         return Response({'message': 'Data added successfully', 'success': 1}, status=status.HTTP_200_OK)
+
+
+class all_booked_ticket_api(GenericAPIView):
+    serializer_class = Passenger_DetailsSerializer
+
+    def get(self, request):
+        passenger_data = Passenger_Details.objects.all()
+        if (passenger_data.count() > 0):
+            all_passenger_data = []
+            for passenger in passenger_data:
+                serializer = Passenger_DetailsSerializer(passenger)
+                serialized_data = serializer.data
+
+                busid = serialized_data['busid']
+                bus_details = Bus_TB.objects.filter(id=busid).values('bus_name', 'bus_number', 'bording_point', 'droppinging_point', 'start_time', 'end_time', 'fare', 'img', 'company_name').first()
+
+                if bus_details:
+                    combined_data = {**serialized_data, **bus_details}
+                    all_passenger_data.append(combined_data)
+
+            if all_passenger_data:
+                return Response({'data': all_passenger_data, 'message': 'Data retrieved successfully', 'success': True}, status=status.HTTP_200_OK)
+            else:
+                return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+        #     serializer = Passenger_DetailsSerializer(passenger, many=True)
+        #     all_passenger_data = []
+        #     return Response({'data': serializer.data, 'message': 'data get', 'success': True}, status=status.HTTP_200_OK)
+        # else:
+        #     return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
+
 
         # a = []
 
@@ -468,6 +509,62 @@ class booked_passenger_details_api(GenericAPIView):
         #     return Response({'data': serializer.data, 'message': 'Successfull', 'success': 1}, status=status.HTTP_200_OK)
         # return Response({'data': serializer.errors, 'message': 'failed', 'success': 0}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class user_view_ticket_api(GenericAPIView):
+    serializer_class = Passenger_DetailsSerializer
+
+    def get(self, request, id):
+
+        bus = Passenger_Details.objects.filter(login_id=id)
+        if bus.exists():
+            all_passenger_data = []
+            for passenger in bus:
+                serializer = Passenger_DetailsSerializer(passenger)
+                serialized_data = serializer.data
+
+                busid = serialized_data['busid']
+                bus_details = Bus_TB.objects.filter(id=busid).values('bus_name', 'bus_number', 'bording_point', 'droppinging_point', 'start_time', 'end_time', 'fare', 'img', 'company_name').first()
+
+                if bus_details:
+                    combined_data = {**serialized_data, **bus_details}
+                    all_passenger_data.append(combined_data)
+
+            if all_passenger_data:
+                return Response({'data': all_passenger_data, 'message': 'Data retrieved successfully', 'success': True}, status=status.HTTP_200_OK)
+            else:
+                return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'data': 'No data available'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # bus = Passenger_Details.objects.filter(login_id=id)
+        # if (bus.count() > 0):
+        #     serializer = Passenger_DetailsSerializer(bus, many=True)
+        #     print(serializer.data)
+        #     for i in serializer.data:
+        #         order = i['id']
+        #         busid = i['busid']
+        #         login_id = i['login_id']
+        #         Name = i['Name']
+        #         Gender = i['Gender']
+        #         Age = i['Age']
+        #         today = i['today']
+        #         statuz = i['statuz']
+        #         seat_no = i['seat_no']
+
+        #         registar_data = Bus_TB.objects.filter(id=busid).values()
+        #         for i in registar_data:
+        #             bus_name = i['bus_name']    
+        #             bus_number = i['bus_number']    
+        #             bording_point = i['bording_point']
+        #             droppinging_point = i['droppinging_point']
+        #             start_time = i['start_time']
+        #             end_time = i['end_time']
+        #             fare = i['fare']
+
+        #     return Response({'data': {'order':order, 'busid':busid, 'login_id':login_id, 'Name':Name, 'Gender':Gender, 'Age':Age, 'today':today, 'statuz':statuz,
+        #                               'seat_no':seat_no, 'bus_name':bus_name, 'bus_number':bus_number, 'bording_point':bording_point,
+        #                               'droppinging_point':droppinging_point, 'start_time':start_time, 'end_time':end_time, 'fare':fare,}, 'message': 'data get', 'success': True}, status=status.HTTP_200_OK)
+        
 
 class enquiry_message_api(GenericAPIView):
     Serializer_class = Enquiry_MessageSerializer

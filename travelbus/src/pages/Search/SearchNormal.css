@@ -1,0 +1,33 @@
+.bus_search_img1 {
+    width: 100%;
+    margin-top: -830px;
+    filter: brightness(.5);
+}
+
+.bus_search_img2 {
+    width: 100%;
+    margin-top: -60px;
+    margin-bottom: -155px;
+    filter: brightness(.5);
+}
+
+.search_level {
+    z-index: 1;
+    filter: drop-shadow(0 -0mm 25mm rgb(43, 4, 24));
+}
+
+.search_head {
+    z-index: 10;
+}
+
+@media only screen and (max-width: 870px) {
+    .bus_search_img1 {
+        margin-top: -520px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .ser_foot {
+        margin-top: -45px;
+    }
+}

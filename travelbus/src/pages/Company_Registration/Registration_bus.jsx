@@ -25,6 +25,7 @@ export default function Registration_bus() {
         axios.post("http://127.0.0.1:8000/api/Bus_company_Registartion_api", input).then((response) => {
             console.log(response.data.message)
             navigate('/login')
+            window.location.reload();
         }).catch((error) => {
         })
     }

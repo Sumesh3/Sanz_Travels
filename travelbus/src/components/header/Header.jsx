@@ -10,6 +10,7 @@ export default function Header() {
 
     const clears = () => {
         localStorage.clear()
+        sessionStorage.clear()
         navigate('/')
         window.location.reload()
     }
@@ -47,7 +48,5 @@ export default function Header() {
                 </div>
             </div>
         </div>
-
-
     )
 }

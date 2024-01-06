@@ -47,17 +47,18 @@ export default function BusDetails() {
                 <NavBar2></NavBar2>
             </div>
 
-            <div className="container approve_bus">
+            <div className="container approved_busses">
                 <>
                     {
                         busDetailsfltr[0] == null ?
-                            <div className='no_pending'>Empty</div>
+                        <div className="loading-bar">Empty</div>
                             :
 
-                            <table className="table approve_table table-bordered">
+                            <table className="approved_bus_table">
                                 <thead>
-                                    <tr className='admin_approve'>
+                                    <tr>
                                         <th>Sl.No</th>
+                                        <th>Image</th>
                                         <th>Establishment</th>
                                         <th>Details</th>
                                         <th>Action</th>
@@ -70,20 +71,44 @@ export default function BusDetails() {
                                                 <tbody>
                                                     <tr>
                                                         <td >{key + 1}</td>
+                                                        <td ><div className='bus_img23' style={{ backgroundImage: `url(/Bustrip/${data.img})` }}></div></td>
                                                         <td>{data.company_name}</td>
-                                                        <td>Bus Name : {data.bus_name}<br />
-                                                            Bus Number : {data.bus_number}<br />
-                                                            Bording Point : {data.bording_point}<br />
-                                                            Droppinging Point : {data.droppinging_point}<br />
-                                                            Start Time : {data.start_time}<br />
-                                                            End Time : {data.end_time}<br />
-                                                            Fare : {data.fare}<br />
-                                                            Total Seats : {data.total_seats}<br />
-                                                            Available Dates : {data.available_dates}
+                                                        <td style={{ textAlign: 'left' }}>
+                                                            <tr className='approved_bus_tr'>
+                                                                <td>Bus Name</td>
+                                                                <td>: {data.bus_name}</td>
+                                                            </tr>
+                                                            <tr className='approved_bus_tr'>
+                                                                <td>Bus Number</td>
+                                                                <td>: {data.bus_number}</td>
+                                                            </tr>
+                                                            <tr className='approved_bus_tr'>
+                                                                <td>Bording Point</td>
+                                                                <td>: {data.bording_point}</td>
+                                                            </tr>
+                                                            <tr className='approved_bus_tr'>
+                                                                <td>Dropping Point</td>
+                                                                <td>: {data.droppinging_point}</td>
+                                                            </tr>
+                                                            <tr className='approved_bus_tr'>
+                                                                <td>Departure Time</td>
+                                                                <td>: {data.start_time}</td>
+                                                            </tr>
+                                                            <tr className='approved_bus_tr'>
+                                                                <td>Arrival Time</td>
+                                                                <td>: {data.end_time}</td>
+                                                            </tr>
+                                                            <tr className='approved_bus_tr'>
+                                                                <td>Fare</td>
+                                                                <td>: {data.fare}</td>
+                                                            </tr>
+                                                            <tr className='approved_bus_tr'>
+                                                                <td>Total Seats</td>
+                                                                <td>: {data.total_seats}</td>
+                                                            </tr>
                                                         </td>
                                                         <td>
                                                             <center>
-                                                                {/* <button className="approve_button" >Edit</button><br /> */}
                                                                 <button className="deleteey_button" onClick={() => { deletee(data.id) }}>Delete</button>
                                                             </center>
                                                         </td>

@@ -66,7 +66,7 @@ export default function NavBar2() {
                                         </li>
                                         : data == 'user' ?
                                             <li className="menu_item">
-                                                <Link to={'/'}>view ticket</Link>
+                                                <Link to={'/viewtickets'}>view ticket</Link>
                                             </li>
                                             :
                                             ''
@@ -76,12 +76,12 @@ export default function NavBar2() {
                             {
                                 data == 'admin' ?
                                     <li className="menu_item">
-                                        <Link to={'/'}>Booked Details</Link>
+                                        <Link to={'/bookedticket'}>Booked Details</Link>
                                     </li>
                                     :
                                     data == 'company' ?
                                         <li className="menu_item">
-                                            <Link to={'/'}>Booked Details</Link>
+                                            <Link to={'/bookedticketco'}>Booked Details</Link>
                                         </li>
                                         :
                                         ''

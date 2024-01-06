@@ -10,7 +10,6 @@ import Editcmpnypro from './Editcmpnypro';
 export default function CompanyProfile() {
 
     const [companyViews, getcompanyViews] = useState({})
-
     const userid = localStorage.getItem('user_id')
 
     useEffect(() => {

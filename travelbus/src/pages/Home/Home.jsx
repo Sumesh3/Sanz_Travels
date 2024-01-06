@@ -14,7 +14,9 @@ export default function Home() {
     let data = localStorage.getItem("role")
 
     return (
+
         <div className="super_container">
+
             <header className="header">
                 <Header></Header>
                 <NavBar></NavBar>

@@ -85,6 +85,9 @@ class Passenger_Details(models.Model):
     Age = models.CharField(max_length=100)
     today = models.CharField(max_length=100)
     statuz = models.CharField(max_length=100)
+    seat_no = models.CharField(max_length=100)
+    seat = models.CharField(max_length=100)
+    busid = models.ForeignKey(Bus_TB, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.Name

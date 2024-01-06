@@ -58,15 +58,24 @@ export default function ApproveCompany() {
                 <NavBar></NavBar>
                 <NavBar2></NavBar2>
             </div>
-            <div className="container approve_com_bus">
+            <div className="container approved_co_bus">
                 <>
                     {
                         approveBussesFlt[0] == null ?
-                            <div className='no_pending'>Empty</div>
+                            <div class="pyramid-loader">
+                                <div class="wrapper_pr">
+                                    <span class="side side1"></span>
+                                    <span class="side side2"></span>
+                                    <span class="side side3"></span>
+                                    <span class="side side4"></span>
+                                    <span class="shadow"></span>
+                                </div>
+                                <div className='pry_text'>Empty...</div>
+                            </div>
                             :
-                            <table className="table approve_com_table table-bordered">
+                            <table className="approved_co_bus_table">
                                 <thead>
-                                    <tr className='admin_com_approve'>
+                                    <tr>
                                         <th>Sl.No</th>
                                         <th>Image</th>
                                         <th>Bus Name / Number</th>
@@ -82,22 +91,39 @@ export default function ApproveCompany() {
                                                 <tbody>
                                                     <tr>
                                                         <td >{key + 1}</td>
-                                                        <td className='aaaaiiii'>
-                                                            <div className='bus_img23' style={{ backgroundImage: `url(/Bustrip/${data.img})` }}>
-                                                                {/* <img className='aaaaayyyy' src={`/Bustrip/${data.img}`} alt="" /> */}
+                                                        <td>
+                                                            <div className='bus_img99' style={{ backgroundImage: `url(/Bustrip/${data.img})` }}>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             {data.bus_name} <br />
                                                             {data.bus_number}
                                                         </td>
-                                                        <td>
-                                                            Bording Point : {data.bording_point}<br />
-                                                            Droppinging Point : {data.droppinging_point}<br />
-                                                            Start Time : {data.start_time}<br />
-                                                            End Time : {data.end_time}<br />
-                                                            Fare : {data.fare}<br />
-                                                            Total Seats : {data.total_seats}<br />
+                                                        <td style={{ textAlign: 'left' }}>
+                                                            <tr className='appr_co_bus'>
+                                                                <td>Bording Point</td>
+                                                                <td>: {data.bording_point}</td>
+                                                            </tr>
+                                                            <tr className='appr_co_bus'>
+                                                                <td>Dropping Point</td>
+                                                                <td>: {data.droppinging_point}</td>
+                                                            </tr>
+                                                            <tr className='appr_co_bus'>
+                                                                <td>Departure Time</td>
+                                                                <td>: {data.start_time}</td>
+                                                            </tr>
+                                                            <tr className='appr_co_bus'>
+                                                                <td>Arrival Time</td>
+                                                                <td>: {data.end_time}</td>
+                                                            </tr>
+                                                            <tr className='appr_co_bus'>
+                                                                <td>Fare</td>
+                                                                <td>: {data.fare}</td>
+                                                            </tr>
+                                                            <tr className='appr_co_bus'>
+                                                                <td>Total Seats</td>
+                                                                <td>: {data.total_seats}</td>
+                                                            </tr>
                                                         </td>
                                                         <td>
                                                             {

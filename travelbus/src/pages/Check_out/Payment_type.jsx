@@ -12,8 +12,6 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Payment_type() {
 
-
-
     const navigate = useNavigate()
 
     const busid = sessionStorage.getItem('busid')
@@ -31,8 +29,11 @@ export default function Payment_type() {
     }
     console.log(paytype);
 
-    const payamount = () => {
+    const payamount = (event) => {
+        event.preventDefault()
+        
         if (paytype === 'qr') {
+
             const data = {
                 busid: busid,
                 login_id: login_id,
@@ -42,7 +43,7 @@ export default function Payment_type() {
                 today: today
             }
             axios.post("http://127.0.0.1:8000/api/booked_seat_api", data).then((response) => {
-                navigate('/payment_successfull')
+                navigate(`/payment_successfull/${response.data.data.id}`)
                 window.location.reload()
             }).catch((error) => {
             })

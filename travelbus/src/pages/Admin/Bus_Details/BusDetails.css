@@ -22,14 +22,7 @@
     top: 150px;
 }
 
-.approve_bus {
-    position: relative;
-    top: 130px;
-    color: black;
-    text-transform: capitalize;
-}
-
-.no_pending{
+.no_pending {
     color: rgb(123, 120, 120);
     text-align: center;
     padding: 100px;
@@ -37,37 +30,37 @@
     font-weight: 600;
 }
 
-.approve_table tbody tr td {
-    border: 1px solid rgba(64, 63, 63, 0.605);
-}
-
-.approve_table thead tr th {
-    border: 2px solid rgba(88, 87, 87, 0.605);
-
-}
-
-.admin_approve {
-    text-align: center;
-}
-
-.admin_approve th {
+.approved_busses {
+    margin-top: 140px;
+    text-transform: capitalize;
     color: black;
 }
 
-.admin_approve th:first-child {
-    width: 15px;
+.approved_bus_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: -120px;
+    color: #292525;
+    text-transform: capitalize;
 }
 
-/* .admin_approve th:nth-child(2) {
-	width: 400px;
-} */
+.approved_bus_table td {
+    border: 1px solid #7b7b7b;
+    padding: 8px;
+    text-align: center;
+}
 
-.admin_approve th:last-child {
-    width: 150px;
+.approved_bus_table th {
+    border: 2px solid #939191;
+    padding: 8px;
+    text-align: center;
+}
+
+.approved_bus_table th:first-child {
+    width: 65px;
 }
 
 .deleteey_button {
-    margin-top: 50%;
     background-color: rgb(204, 2, 2);
     border: none;
     height: 36px;
@@ -79,4 +72,73 @@
 
 .deleteey_button:hover {
     background-color: rgb(164, 1, 1);
+}
+
+.approved_bus_tr td {
+    border: none;
+    text-align: left;
+    padding: 2px;
+    padding-right: 8px;
+    text-transform: capitalize;
+}
+
+.loading-bar {
+    position: relative;
+    top: 90px;
+    width: 210px;
+    height: 110px;
+    background: black;
+    border: px solid #3c3c3c;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 111px;
+    font-family: sans-serif;
+    font-size: 15px;
+    color: #fd9815;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px #fff000;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    margin: 60px auto;
+}
+
+.loading-bar:before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top: 5px solid #fff000;
+    border-right: 5px solid #fff000;
+    border-radius: 50%;
+    animation: animateC 2s linear infinite;
+}
+
+@keyframes animateC {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(45deg);
+    }
+
+    100% {
+        transform: rotate(405deg);
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .approved_bus_table {
+        overflow-x: auto;
+        display: block;
+    }
 }
