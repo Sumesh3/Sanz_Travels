@@ -7,7 +7,6 @@ import FooterB from '../FooterB/FooterB'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-
 export default function DebitCard() {
 
 	const [input, getInputs] = useState({})
@@ -34,7 +33,6 @@ export default function DebitCard() {
 	const total_fare = sessionStorage.getItem('total_fare')
 	const today = sessionStorage.getItem('today')
 
-
 	const payamount = (event) => {
 		event.preventDefault()
 
@@ -52,9 +50,6 @@ export default function DebitCard() {
 		}).catch((error) => {
 		})
 	}
-
-
-
 
 	return (
 		<>

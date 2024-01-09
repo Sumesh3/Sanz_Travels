@@ -50,7 +50,7 @@ export default function Payment_type() {
         }
 
         if (paytype === 'upi') {
-            navigate('/')
+            navigate('/upi')
         }
 
         if (paytype === 'debit_card') {

@@ -6,6 +6,8 @@ import NavBar2 from '../../components/navBar/NavBar2'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import './Registration_bus.css'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Registration_bus() {
 
@@ -22,16 +24,38 @@ export default function Registration_bus() {
     console.log(input);
 
     const submit = (event) => {
+        event.preventDefault()
         axios.post("http://127.0.0.1:8000/api/Bus_company_Registartion_api", input).then((response) => {
             console.log(response.data.message)
-            navigate('/login')
-            window.location.reload();
+            // navigate('/login')
+            // window.location.reload();
+            toast.success(response.data.message, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "light",
+            });
         }).catch((error) => {
+            toast.error(error.response.data.message, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         })
     }
 
     return (
         <>
+            <ToastContainer />
             <div className='reg_head'>
                 <Header></Header>
             </div>
@@ -56,7 +80,7 @@ export default function Registration_bus() {
                 </form>
 
                 <div className="social-account-container">
-                    <span className="title">Or Sign in with</span>
+                    {/* <span className="title">Or Sign in with</span> */}
 
                     <div className="social-accounts">
                         <button className="social-button google">

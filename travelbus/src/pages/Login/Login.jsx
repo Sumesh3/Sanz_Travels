@@ -6,7 +6,8 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import './Login.css'
-
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 
@@ -29,15 +30,27 @@ export default function Login() {
             localStorage.setItem("role", response.data.data.role)
             localStorage.setItem("user_id", response.data.data.user_id)
             localStorage.setItem("login_id", response.data.data.login_id)
+            sessionStorage.setItem("cname", response.data.data.name)
             navigate('/')
             window.location.reload()
         }).catch((error) => {
+            toast.error(error.response.data.data, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         })
     }
 
 
     return (
         <>
+        <ToastContainer />
             <div className='log_hed'>
                 <Header></Header>
             </div>
@@ -51,14 +64,14 @@ export default function Login() {
                 <form action className="form logform">
                     <input required className="input" type="email" name="email" placeholder="E-mail" onChange={loginData} />
                     <input required className="input" type="password" name="password" placeholder="Password" onChange={loginData} />
-                    <span className="forgot-password"><a href="#">Forgot Password ?</a></span>
+                    <span className="forgot-password"><Link to={"/otpemail"}>Forgot Password ?</Link></span>
                     <input className="login-button" type="submit" defaultValue="Sign In" onClick={submit} />
                     <center>
                         <p className="signin">Don't have an acount ? <Link className='sighinal' to={'/registration'}>Sign up</Link> </p>
                     </center>
                 </form>
                 <div className="social-account-container">
-                    <span className="title">Or Sign in with</span>
+                    {/* <span className="title">Or Sign in with</span> */}
                     <div className="social-accounts">
                         <button className="social-button google">
                             <svg className="svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 488 512">

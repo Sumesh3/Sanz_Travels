@@ -6,6 +6,8 @@ import Header from '../../../components/header/Header'
 import FooterB from '../../FooterB/FooterB'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddBus() {
 
@@ -51,7 +53,7 @@ export default function AddBus() {
     if (file) {
       data.append("login_id", login_id);
       data.append("img", file);
-;      data.append("company_name", company_name);
+      ; data.append("company_name", company_name);
       data.append("bus_name", input.bus_name);
       data.append("bus_number", input.bus_number);
       data.append("bording_point", input.bording_point);
@@ -59,25 +61,61 @@ export default function AddBus() {
       data.append("start_time", input.start_time);
       data.append("end_time", input.end_time);
       data.append("fare", input.fare);
-;      data.append("total_seats", input.total_seats);
+      ; data.append("total_seats", input.total_seats);
       // data.append("available_dates", input.available_dates)
 
       axios.post("http://127.0.0.1:8000/api/add_bus_details_api", data).then((response) => {
         console.log(response.data.message);
-        navigate('/');
-        window.location.reload();
+        toast.success(response.data.message, {
+          position: "bottom-center",
+          autoClose: 1800,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       })
         .catch((error) => {
+          toast.error(error.response.data.message, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
           console.log(error);
         })
     }
     else {
       axios.post("http://127.0.0.1:8000/api/add_bus_details_api", input).then((response) => {
         console.log(response.data.message);
-        navigate('/');
-        window.location.reload();
+        toast.success(response.data.message, {
+          position: "bottom-center",
+          autoClose: 1800,
+          hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       })
         .catch((error) => {
+          toast.error(error.response.data.message, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
           console.log(error);
         })
     }
@@ -86,6 +124,7 @@ export default function AddBus() {
 
   return (
     <>
+      <ToastContainer />
       <div className='log_hed'>
         <Header></Header>
       </div>

@@ -10,7 +10,7 @@ export default function FooterB() {
                     <div className="footer_col">
                         <div className="footer_content footer_about">
                             <div className="logo_container footer_logo">
-                                <div className="logo"><Link to={'/'}><img src="Assets/images/logo.png" height={'40px'}/>sanz travel</Link></div>
+                                <div className="logo"><Link to={'/'} ><img src="Assets/images/logo.png" height={'40px'}/>Stallions</Link></div>
                             </div>
                             <p className="footer_about_text">Our service and packages are affordable for everyone, book your seat and enjoy with us.</p>
                             <ul className="footer_social_list">
@@ -92,7 +92,7 @@ export default function FooterB() {
                                 </li>
                                 <li className="contact_info_item d-flex flex-row">
                                     <div><div className="contact_info_icon"><img src="/Assets/images/planet-earth.svg" alt="" /></div></div>
-                                    <div className="contact_info_text"><a href="">www.sanztravel.com</a></div>
+                                    <div className="contact_info_text"><a href="">www.stallions.com</a></div>
                                 </li>
                             </ul>
                         </div>

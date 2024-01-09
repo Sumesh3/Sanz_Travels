@@ -35,14 +35,20 @@ export default function Header() {
                                     <div class="user_box_login user_box_link">
                                         <Link to={'/'} onClick={clears}>log out</Link>
                                     </div>
+                                    <div class="user_box_register user_box_link">
+                                        <Link to={'/changepassword'}>Change Password</Link>
+                                    </div>
                                 </>
-                                : <><div class="user_box_login user_box_link">
-                                    <Link to={'/login'}>login</Link>
-                                </div>
+                                :
+                                <>
+                                    <div class="user_box_login user_box_link">
+                                        <Link to={'/login'}>login</Link>
+                                    </div>
                                     <div class="user_box_register user_box_link">
                                         <Link to={'/registration'}>register</Link>
                                     </div>
-                                </>}
+                                </>
+                            }
                         </div>
                     </div>
                 </div>

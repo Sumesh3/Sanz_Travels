@@ -18,7 +18,7 @@ export default function NavBar() {
                 <div className="row">
                     <div className="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                         <div className="logo_container">
-                            <div className="logo"><Link to={'/'}><img src="Assets/images/logo.png" height={'40px'} />Sanz travel</Link></div>
+                            <div className="logo"><Link to={'/'} style={{letterSpacing:'1px', fontFamily:'sans-serif'}}><img src="Assets/images/logo.png" height={'40px'} />Stallions</Link></div>
                         </div>
                         <div className="main_nav_container ml-auto">
                             <ul className="main_nav_list">

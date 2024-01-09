@@ -9,16 +9,27 @@ export default function ShowBusses({ data }) {
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    
+    const handleClose = () => {
+        setOpen(false);
+        window.location.reload();
+      };
 
     const [allBusses, getAllBusses] = useState([])
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         axios.get(`http://127.0.0.1:8000/api/company_all_bus_api/${data}`).then((response) => {
             getAllBusses(response.data.data)
         })
             .catch((error) => {
-                console.log(error);
+                if (error.response) {
+                    setError(error.response.data.message);
+                } else if (error.request) {
+                    setError('No response received');
+                } else {
+                    setError(error.message);
+                }
             })
     }, [data])
 
@@ -36,31 +47,37 @@ export default function ShowBusses({ data }) {
                             <div className='edit_main'>
                                 <div className="show_busses">
                                     <>
-                                        <table className="table busses_table table-bordered">
-                                            <thead>
-                                                <tr className='table_bus'>
-                                                    <th>Sl.No</th>
-                                                    <th>Bus Name</th>
-                                                    <th>Bus Number</th>
-                                                </tr>
-                                            </thead>
-                                            {
-                                                allBusses.map((data, key) => (
-                                                    <>
+                                        {
+                                            allBusses[0] != null ?
+                                                <table className="table busses_table table-bordered">
+                                                    <thead>
+                                                        <tr className='table_bus'>
+                                                            <th>Sl.No</th>
+                                                            <th>Bus Name</th>
+                                                            <th>Bus Number</th>
+                                                        </tr>
+                                                    </thead>
+                                                    {
+                                                        allBusses.map((data, key) => (
+                                                            <>
 
-                                                        <>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td >{key + 1}</td>
-                                                                    <td>{data.bus_name}</td>
-                                                                    <td>{data.bus_number}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </>
-                                                    </>
-                                                ))
-                                            }
-                                        </table >
+                                                                <>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td >{key + 1}</td>
+                                                                            <td>{data.bus_name}</td>
+                                                                            <td>{data.bus_number}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </>
+                                                            </>
+                                                        ))
+                                                    }
+                                                </table >
+                                                :
+                                                error
+                                        }
+
                                     </>
                                     <button className='close_button_add' onClick={handleClose}>x</button>
                                 </div>

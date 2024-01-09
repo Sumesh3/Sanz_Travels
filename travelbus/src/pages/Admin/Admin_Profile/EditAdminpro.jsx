@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './EditAdminpro.css'
 import Modal from '@mui/material/Modal';
-import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function EditAdminpro() {
 
@@ -29,6 +30,16 @@ export default function EditAdminpro() {
     const admupdate = () => {
         axios.put(`http://127.0.0.1:8000/api/update_admin_api/${userid}`, adprviews).then((response) => {
             console.log(response);
+            toast.success(response.data.message, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "light",
+            });
             window.location.reload()
         })
 
@@ -36,6 +47,7 @@ export default function EditAdminpro() {
 
     return (
         <>
+        <ToastContainer/>
             <div>
                 <div onClick={handleOpen} >Edit Profile</div>
                 <Modal

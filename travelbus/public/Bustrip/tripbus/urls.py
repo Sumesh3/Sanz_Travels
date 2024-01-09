@@ -41,4 +41,9 @@ urlpatterns = [
     path("user_view_ticket_api/<int:id>", views.user_view_ticket_api.as_view(), name="user_view_ticket_api"),
     
     path("enquiry_message_api", views.enquiry_message_api.as_view(), name="enquiry_message_api"),
+
+    path("OTP_send_API", views.OTP_send_API.as_view(), name="OTP_send_API"),
+    path("OTP_Checking_API", views.OTP_Checking_API.as_view(), name="OTP_Checking_API"),
+    path("update_Password_API", views.update_Password_API.as_view(), name="update_Password_API"),
+    path("password_change_api/<int:id>", views.password_change_api.as_view(), name="password_change_api"),
 ]

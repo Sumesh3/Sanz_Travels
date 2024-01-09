@@ -7,6 +7,7 @@ import axios from 'axios'
 import Header from '../../components/header/Header'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Registration() {
 
@@ -22,54 +23,33 @@ export default function Registration() {
 
     console.log(input);
 
-    // const [error, setError] = useState({})
-    // const [submits, setSubmit] = useState(false)
-
-    // const validate = (value) => {
-    //     let error = {}
-
-    //     if (value.password != value.cpassword) {
-    //         toast.error('Incorrect Password', {
-    //             position: "top-right",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //             theme: "light",
-    //             });
-
-    //         error.name = 'Incorrect Password'
-    //     }
-    //     return error
-    // }
-    // console.log(error);
-
-
-    // useEffect(() => {
-    //    if(submits){
-    //     setError(validate(input))
-
-    //     console.log(Object.keys(error).length, submits);
-    //     if (Object.keys(error).length === 0) {
-
-    //         axios.post("http://127.0.0.1:8000/api/user_registration_api", input).then((response) => {
-    //             console.log(response.data.message)
-    //         navigate('/login')
-    //         }).catch((error) => {
-    //         })
-    //     }
-    //    }
-    // },[submits])
-
-
     const submit = (event) => {
         event.preventDefault()
         axios.post("http://127.0.0.1:8000/api/user_registration_api", input).then((response) => {
             console.log(response.data.message)
-            navigate('/login')
+            // navigate('/login')
+            // window.location.reload()
+            toast.success(response.data.message, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
         }).catch((error) => {
+            toast.error(error.response.data.message, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         })
     }
 
@@ -100,7 +80,7 @@ export default function Registration() {
                 </form>
 
                 <div className="social-account-container">
-                    <span className="title">Or Sign in with</span>
+                    {/* <span className="title">Or Sign in with</span> */}
 
                     <div className="social-accounts">
                         <button className="social-button google">

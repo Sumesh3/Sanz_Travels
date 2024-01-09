@@ -32,6 +32,8 @@ export default function SeatChart() {
         }
     }
 
+    const seatnos = count.join(',');
+
     const [busDetails, getBusrDetails] = useState([])
 
     const busid = sessionStorage.getItem('busid')
@@ -84,6 +86,7 @@ export default function SeatChart() {
         axios.get(`http://127.0.0.1:8000/api/view_seat_book_api/${busid}/${date.today}`).then((response) => {
             console.log(response);
             getBookedSeat(response.data.data)
+            // window.location.reload()
         })
             .catch((error) => {
                 console.log(error);
@@ -116,6 +119,15 @@ export default function SeatChart() {
     console.log(selectDate);
 
     console.log(count.length);
+
+    const getTodayDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+    const [minDate, setMinDate] = useState(getTodayDate());
 
 
     return (
@@ -559,22 +571,51 @@ export default function SeatChart() {
                 </div>
                 <div className='seat_booking col-lg-6'>
                     <h3>Booking Details</h3><br />
-                    <p>Date : <input type="date" name='today' onChange={tdate} /> </p>
-                    <p>Total Seats : {busDetails.total_seats}</p>
-                    <p>Available Seats : {seat}</p>
-                    <p>No. of booked seates : {count.length}</p>
-                    <p>Seat nos. : {count}</p>
-                    <p>One Seat Fare : {busDetails.fare}</p>
-                    <p>Total Fare : {total_fare}</p>
+                    <table className='seat_table'>
+                        <tbody>
+                            <tr>
+                                <td className='seat_td'>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>:  <input type="date" name='today' onChange={tdate} min={minDate} /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Seats</td>
+                                        <td>: {busDetails.total_seats}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Available Seats </td>
+                                        <td>: {seat}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>No. of booked seates </td>
+                                        <td>: {count.length}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Seat nos. </td>
+                                        <td>: {seatnos}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>One Seat Fare </td>
+                                        <td>: {busDetails.fare}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Fare </td>
+                                        <td>: {total_fare}</td>
+                                    </tr>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <button onClick={Proceed} className='continue_button'>PROCEED TO BOOK</button>
                 </div>
             </div>
-
             <div className='reg_foot'>
                 <FooterB></FooterB>
             </div>
 
-            
+
 
         </>
     )

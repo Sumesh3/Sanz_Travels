@@ -29,6 +29,11 @@ import SearchNormal from './pages/Search/SearchNormal';
 import ViewTickets from './pages/View_Tickets/ViewTickets';
 import AllBookedTickets from './pages/Admin/All_Booked_tickets/AllBookedTickets';
 import BookedTicketCo from './pages/Company_Registration/Booked_Tickets_co/BookedTicketCo';
+import OtpEmail from './pages/Change_Password/OTP/OtpEmail';
+import EnterOtp from './pages/Change_Password/OTP/EnterOtp';
+import NewPassword from './pages/Change_Password/OTP/NewPassword';
+import PasswordChange from './pages/Change_Password/C_Password_Change/PasswordChange';
+import Upi from './pages/UPI/Upi';
 
 
 function App() {
@@ -64,6 +69,11 @@ function App() {
           <Route path='/viewtickets' element={<ViewTickets/>} />
           <Route path='/bookedticket' element={<AllBookedTickets/>} />
           <Route path='/bookedticketco' element={<BookedTicketCo/>} />
+          <Route path='/otpemail' element={<OtpEmail/>} />
+          <Route path='/enterotp' element={<EnterOtp/>} />
+          <Route path='/newpassword' element={<NewPassword/>} />
+          <Route path='/changepassword' element={<PasswordChange/>} />
+          <Route path='/upi' element={<Upi/>} />
         </Routes>
       </BrowserRouter>
     </>

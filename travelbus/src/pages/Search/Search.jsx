@@ -2,6 +2,7 @@ import axios from 'axios'
 import './Search.css'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
 export default function Search() {
 
@@ -121,7 +122,7 @@ export default function Search() {
                                     <div className="row offers_items" >
                                         {/* Offers Item */}
                                         {
-                                            searchResult[0] == null ?
+                                            searchResultFilter[0] == null ?
                                                 <div className='not_available'>Not   available</div>
                                                 :
                                                 searchResultFilter.map((data, key) => (
@@ -131,7 +132,7 @@ export default function Search() {
                                                                 <div className="row">
                                                                     <div className="col-lg-6">
                                                                         <div className="offers_image_container">
-                                                                            <img className="offers_image_background" src={`/Bustrip${data.img}`} alt="" onError={(e) => { e.target.src = '/Bustrip/media/images/istockphoto-540124958-1024x1024.jpg' }} />
+                                                                            <img className="offers_image_background" src={`/Bustrip${data.img}`} alt="" onError={(e) => { e.target.src = '/Bustrip/media/images/default_image.jpg' }} />
                                                                             {/* <div className="offers_image_background" style={{ backgroundImage: `url(/Bustrip${data.img})`}} onError={aaa}/> */}
                                                                         </div>
                                                                     </div>
@@ -139,10 +140,10 @@ export default function Search() {
                                                                         <div className="offers_content">
                                                                             <div className='offers_text'>{data.start_time} - {data.end_time}</div>
                                                                             <div className='offers_text' style={{ textTransform: 'capitalize' }}>{data.bording_point} to {data.droppinging_point}</div>
-                                                                            <div className="offers_price">{data.fare}<span>per head</span></div>
+                                                                            <div className="offers_price"><CurrencyRupeeIcon/>{data.fare}<span>per head</span></div>
                                                                             <div className='offers_text'>Total {data.total_seats} Seats</div>
-                                                                            <div className='offers_text'>Available Seats : {data.available_dates}</div>
-                                                                            <div className="offer_name"><span className='offer_name_a'>{data.company_name}</span></div>
+                                                                            {/* <div className='offers_text'>Available Seats : {data.available_seats}</div> */}
+                                                                            <div className="offer_name"><span className='offer_name_a'>{data.bus_name}</span></div>
                                                                             <div className="rating_r rating_r_4 offers_rating">
                                                                                 <i />
                                                                                 <i />

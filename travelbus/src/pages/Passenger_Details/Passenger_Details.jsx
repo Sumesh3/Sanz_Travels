@@ -6,6 +6,8 @@ import NavBar2 from '../../components/navBar/NavBar2';
 import FooterB from '../FooterB/FooterB';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const Component = () => {
@@ -31,7 +33,7 @@ const Component = () => {
             Name: "",
             Gender: "",
             Age: "",
-            seat:seat_nos[i]
+            seat: seat_nos[i]
         }))
     );
 
@@ -103,11 +105,22 @@ const Component = () => {
             navigate('/payment_type')
             window.location.reload()
         }).catch((error) => {
+            toast.error(error.response.data.message, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         })
     }
 
     return (
         <>
+            <ToastContainer />
             <div className='log_hed'>
                 <Header></Header>
             </div>
