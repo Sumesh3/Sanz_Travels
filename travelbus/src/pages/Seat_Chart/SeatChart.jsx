@@ -83,13 +83,14 @@ export default function SeatChart() {
 
 
     useEffect(() => {
+
         axios.get(`http://127.0.0.1:8000/api/view_seat_book_api/${busid}/${date.today}`).then((response) => {
             console.log(response);
             getBookedSeat(response.data.data)
             // window.location.reload()
         })
             .catch((error) => {
-                console.log(error);
+                getBookedSeat([])
             })
     }, [date])
 
@@ -583,10 +584,10 @@ export default function SeatChart() {
                                         <td>Total Seats</td>
                                         <td>: {busDetails.total_seats}</td>
                                     </tr>
-                                    <tr>
+                                    {/* <tr>
                                         <td>Available Seats </td>
                                         <td>: {seat}</td>
-                                    </tr>
+                                    </tr> */}
                                     <tr>
                                         <td>No. of booked seates </td>
                                         <td>: {count.length}</td>

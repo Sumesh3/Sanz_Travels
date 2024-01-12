@@ -12,7 +12,7 @@ export default function ShowBusses({ data }) {
     
     const handleClose = () => {
         setOpen(false);
-        window.location.reload();
+        // window.location.reload();
       };
 
     const [allBusses, getAllBusses] = useState([])
@@ -23,13 +23,7 @@ export default function ShowBusses({ data }) {
             getAllBusses(response.data.data)
         })
             .catch((error) => {
-                if (error.response) {
-                    setError(error.response.data.message);
-                } else if (error.request) {
-                    setError('No response received');
-                } else {
-                    setError(error.message);
-                }
+                getAllBusses([])
             })
     }, [data])
 
@@ -75,7 +69,7 @@ export default function ShowBusses({ data }) {
                                                     }
                                                 </table >
                                                 :
-                                                error
+                                                "They don't have a bus"
                                         }
 
                                     </>
