@@ -9,6 +9,7 @@ import Cta from '../CTA/Cta'
 import Testimonials from '../Testimonials/Testimonials'
 import Contact from '../Contact/Contact'
 import FooterB from '../FooterB/FooterB'
+import { useEffect } from 'react'
 
 export default function Home() {
     let data = localStorage.getItem("role")

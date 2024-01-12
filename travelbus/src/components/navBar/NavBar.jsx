@@ -13,7 +13,7 @@ export default function NavBar() {
     }
 
     return (
-        <nav className="main_nav">
+        <nav className="main_nav mt-4">
             <div className="container">
                 <div className="row">
                     <div className="col main_nav_col d-flex flex-row align-items-center justify-content-start">

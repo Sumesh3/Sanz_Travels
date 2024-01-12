@@ -52,16 +52,16 @@ export default function HomeDup() {
                                 <>
                                     {
                                         data == "company" ?
-                                            <div className="button home_slider_button"><div className="button_bcg" />
+                                            <div className="button home_slider_button"><div className="button_bcg"/>
                                                 <Link to={"/addbus"}>add now<span /><span /><span /></Link>
                                             </div>
                                             :
                                             data == 'admin' ?
-                                                <div className="button home_slider_button"><div className="button_bcg" />
+                                                <div className="button home_slider_button"><div className="button_bcg"/>
                                                     <Link to={'/approvebus'}>Confirm Request<span /><span /><span /></Link>
                                                 </div>
                                                 :
-                                                <div className="button home_slider_button"><div className="button_bcg" />
+                                                <div className="button home_slider_button"><div className="button_bcg"/>
                                                     {
                                                         user ?
                                                             <Link to={'/searchnormal'}>explore now<span /><span /><span /></Link>
