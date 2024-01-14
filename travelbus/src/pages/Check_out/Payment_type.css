@@ -54,6 +54,7 @@
     color: inherit;
     font: inherit;
     accent-color: #c0236c;
+    cursor: pointer;
 }
 
 .button_bill{
